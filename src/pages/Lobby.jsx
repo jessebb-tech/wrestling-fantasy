@@ -9,7 +9,7 @@ const TOTAL_OWNERS = 10
 export default function Lobby() {
   const navigate = useNavigate()
   const { owners, loading: ownersLoading } = useOwners()
-  const { session } = useDraftSession()
+  const { session, loading: sessionLoading } = useDraftSession()
   const [joinCode, setJoinCode] = useState('')
   const [newOwnerName, setNewOwnerName] = useState('')
   const [error, setError] = useState('')
@@ -102,6 +102,16 @@ export default function Lobby() {
   const storedOwnerId = localStorage.getItem('owner_id')
   const currentOwner = owners.find(o => o.id === storedOwnerId)
   const isCommissioner = currentOwner?.is_commissioner
+
+  // Don't render anything until session is known — avoids flashing the join form
+  // before the redirect to /scores fires
+  if (sessionLoading) {
+    return (
+      <div className="lobby-page" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', minHeight: '100vh' }}>
+        <p className="muted">Loading...</p>
+      </div>
+    )
+  }
 
   return (
     <div className="lobby-page">
