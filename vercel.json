@@ -2,7 +2,7 @@
   "crons": [
     {
       "path": "/api/fetch-scores",
-      "schedule": "*/5 * * * *"
+      "schedule": "0 * * * *"
     }
   ],
   "rewrites": [
