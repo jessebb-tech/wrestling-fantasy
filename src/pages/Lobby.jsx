@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { supabase } from '../lib/supabase'
 import { useOwners } from '../hooks/useOwners'
@@ -16,13 +16,14 @@ export default function Lobby() {
   const [joining, setJoining] = useState(false)
   const [creating, setCreating] = useState(false)
 
-  // If draft is already active, redirect
-  if (session?.status === 'active') {
-    // Check if user has a stored owner id
-    const storedId = localStorage.getItem('owner_id')
-    if (storedId) navigate('/draft')
-  }
-  if (session?.status === 'complete') navigate('/scores')
+  useEffect(() => {
+    if (!session) return
+    if (session.status === 'complete') {
+      navigate('/scores')
+    } else if (session.status === 'active' && localStorage.getItem('owner_id')) {
+      navigate('/draft')
+    }
+  }, [session, navigate])
 
   async function handleJoin(e) {
     e.preventDefault()
