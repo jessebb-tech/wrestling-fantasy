@@ -18,6 +18,10 @@ export default function Scores() {
   const ownerId = localStorage.getItem('owner_id')
 
   useEffect(() => {
+    if (!ownerId) navigate('/')
+  }, [ownerId, navigate])
+
+  useEffect(() => {
     if (wrestlers.length > 0) {
       const latest = wrestlers
         .filter(w => w.last_updated)

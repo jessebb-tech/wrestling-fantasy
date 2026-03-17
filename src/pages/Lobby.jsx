@@ -18,9 +18,11 @@ export default function Lobby() {
 
   useEffect(() => {
     if (!session) return
+    const hasAuth = !!localStorage.getItem('owner_id')
+    if (!hasAuth) return  // no code entered yet — stay on lobby
     if (session.status === 'complete') {
       navigate('/scores')
-    } else if (session.status === 'active' && localStorage.getItem('owner_id')) {
+    } else if (session.status === 'active') {
       navigate('/draft')
     }
   }, [session, navigate])
@@ -46,7 +48,11 @@ export default function Lobby() {
     localStorage.setItem('owner_id', data.id)
     localStorage.setItem('owner_name', data.name)
     localStorage.setItem('join_code', code)
-    navigate('/draft')
+    if (session?.status === 'complete') {
+      navigate('/scores')
+    } else {
+      navigate('/draft')
+    }
     setJoining(false)
   }
 
