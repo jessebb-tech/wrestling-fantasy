@@ -11,13 +11,13 @@ export default function Scores() {
   const { owners } = useOwners()
   const { picks } = usePicks()
   const { wrestlers } = useWrestlers()
-  const [view, setView] = useState('leaderboard') // 'leaderboard' | 'by_weight' | 'my_team'
+  const [view, setView] = useState('leaderboard') // 'leaderboard' | 'by_weight' | 'team'
+  const [selectedOwner, setSelectedOwner] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
 
   const ownerId = localStorage.getItem('owner_id')
 
   useEffect(() => {
-    // Get last updated time from wrestlers
     if (wrestlers.length > 0) {
       const latest = wrestlers
         .filter(w => w.last_updated)
@@ -41,6 +41,16 @@ export default function Scores() {
 
   const myOwner = ownerScores.find(o => o.id === ownerId)
 
+  function handleSelectOwner(owner) {
+    setSelectedOwner(owner)
+    setView('team')
+  }
+
+  function handleBackToLeaderboard() {
+    setView('leaderboard')
+    setSelectedOwner(null)
+  }
+
   return (
     <div className="scores-page">
       <header className="scores-header">
@@ -51,16 +61,16 @@ export default function Scores() {
         <div className="scores-header-nav">
           <button
             className={`tab-btn ${view === 'leaderboard' ? 'active' : ''}`}
-            onClick={() => setView('leaderboard')}
+            onClick={() => { setView('leaderboard'); setSelectedOwner(null) }}
           >Leaderboard</button>
           <button
             className={`tab-btn ${view === 'by_weight' ? 'active' : ''}`}
-            onClick={() => setView('by_weight')}
+            onClick={() => { setView('by_weight'); setSelectedOwner(null) }}
           >By Weight</button>
           {myOwner && (
             <button
-              className={`tab-btn ${view === 'my_team' ? 'active' : ''}`}
-              onClick={() => setView('my_team')}
+              className={`tab-btn ${view === 'team' && selectedOwner?.id === myOwner.id ? 'active' : ''}`}
+              onClick={() => handleSelectOwner(myOwner)}
             >My Team</button>
           )}
           <button className="btn-sm" onClick={() => navigate('/draft')}>Draft</button>
@@ -73,31 +83,52 @@ export default function Scores() {
         </div>
       )}
 
-      {view === 'leaderboard' && <Leaderboard ownerScores={ownerScores} ownerId={ownerId} />}
+      {view === 'leaderboard' && (
+        <Leaderboard
+          ownerScores={ownerScores}
+          ownerId={ownerId}
+          onSelectOwner={handleSelectOwner}
+        />
+      )}
       {view === 'by_weight' && <ByWeight picks={picks} wrestlers={wrestlers} owners={owners} />}
-      {view === 'my_team' && myOwner && <MyTeam owner={myOwner} wrestlers={wrestlers} />}
+      {view === 'team' && selectedOwner && (
+        <TeamRoster
+          owner={selectedOwner}
+          wrestlers={wrestlers}
+          rank={ownerScores.findIndex(o => o.id === selectedOwner.id) + 1}
+          isMe={selectedOwner.id === ownerId}
+          onBack={handleBackToLeaderboard}
+        />
+      )}
     </div>
   )
 }
 
-function Leaderboard({ ownerScores, ownerId }) {
+function Leaderboard({ ownerScores, ownerId, onSelectOwner }) {
   return (
     <div className="leaderboard">
+      <p className="lb-hint muted">Tap a row to view that team's roster</p>
       <div className="lb-table">
         <div className="lb-header">
           <div>Rank</div>
           <div>Owner</div>
           <div>Picks</div>
           <div>Points</div>
+          <div></div>
         </div>
         {ownerScores.map((owner, idx) => (
-          <div key={owner.id} className={`lb-row ${owner.id === ownerId ? 'me' : ''}`}>
+          <div
+            key={owner.id}
+            className={`lb-row clickable ${owner.id === ownerId ? 'me' : ''}`}
+            onClick={() => onSelectOwner(owner)}
+          >
             <div className="lb-rank">
               {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
             </div>
-            <div className="lb-name">{owner.name}</div>
+            <div className="lb-name">{owner.name}{owner.id === ownerId && <span className="you-badge"> (You)</span>}</div>
             <div className="lb-picks">{owner.picks.length}/10</div>
             <div className="lb-points">{owner.totalPoints.toFixed(1)}</div>
+            <div className="lb-arrow">›</div>
           </div>
         ))}
       </div>
@@ -145,23 +176,38 @@ function ByWeight({ picks, wrestlers, owners }) {
   )
 }
 
-function MyTeam({ owner, wrestlers }) {
+function TeamRoster({ owner, wrestlers, rank, isMe, onBack }) {
   const totalPoints = owner.picks.reduce((sum, p) => {
     const wrestler = wrestlers.find(w => w.id === p.wrestler_id)
     return sum + (wrestler?.total_points || 0)
   }, 0)
 
+  const rankLabel = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`
+  const activeCount = owner.picks.filter(p => {
+    const w = wrestlers.find(w => w.id === p.wrestler_id)
+    return w && !w.is_eliminated
+  }).length
+
   return (
     <div className="my-team-page">
+      <button className="back-btn" onClick={onBack}>← Leaderboard</button>
+
       <div className="team-header card">
-        <h2>{owner.name}</h2>
-        <div className="team-total">{totalPoints.toFixed(1)} total points</div>
+        <div className="team-header-top">
+          <div className="team-rank-badge">{rankLabel}</div>
+          <div>
+            <h2>{owner.name}{isMe && <span className="you-badge"> (You)</span>}</h2>
+            <div className="team-meta muted">{activeCount} active · {owner.picks.length - activeCount} eliminated</div>
+          </div>
+        </div>
+        <div className="team-total">{totalPoints.toFixed(1)} pts</div>
       </div>
 
       <div className="team-roster">
         {WEIGHT_CLASSES.map(wc => {
           const pick = owner.picks.find(p => p.weight_class === wc)
           const wrestler = pick ? wrestlers.find(w => w.id === pick.wrestler_id) : null
+          const pts = wrestler?.total_points || 0
 
           return (
             <div key={wc} className={`team-card card ${wrestler?.is_eliminated ? 'eliminated' : ''}`}>
@@ -169,10 +215,12 @@ function MyTeam({ owner, wrestlers }) {
               {wrestler ? (
                 <>
                   <div className="team-wrestler-name">{wrestler.name}</div>
-                  <div className="team-school">{wrestler.school}</div>
-                  <div className="team-seed">Seed #{wrestler.seed}</div>
-                  <div className="team-pts">{(wrestler.total_points || 0).toFixed(1)} pts</div>
-                  {wrestler.is_eliminated && <div className="elim-tag">Eliminated</div>}
+                  <div className="team-school">{wrestler.school} · Seed #{wrestler.seed}</div>
+                  <div className="team-pts-row">
+                    <span className={`team-pts ${pts > 0 ? 'scoring' : ''}`}>{pts.toFixed(1)} pts</span>
+                    {wrestler.is_eliminated && <span className="elim-tag">OUT</span>}
+                    {!wrestler.is_eliminated && <span className="active-tag">Active</span>}
+                  </div>
                 </>
               ) : (
                 <div className="no-pick muted">No pick</div>

@@ -363,23 +363,28 @@ input:focus { border-color: var(--accent); }
 
 /* Leaderboard */
 .leaderboard { padding: 20px; max-width: 600px; margin: 0 auto; width: 100%; }
+.lb-hint { font-size: 12px; text-align: center; margin-bottom: 12px; }
 .lb-table { display: flex; flex-direction: column; gap: 2px; }
 .lb-header {
-  display: grid; grid-template-columns: 48px 1fr 60px 80px;
+  display: grid; grid-template-columns: 48px 1fr 60px 80px 24px;
   padding: 6px 12px; font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase;
 }
 .lb-row {
-  display: grid; grid-template-columns: 48px 1fr 60px 80px;
+  display: grid; grid-template-columns: 48px 1fr 60px 80px 24px;
   align-items: center; padding: 12px 12px;
   background: var(--bg2); border: 1px solid var(--border); border-radius: var(--radius);
   transition: background 0.15s;
 }
+.lb-row.clickable { cursor: pointer; }
+.lb-row.clickable:hover { background: #1e253a; border-color: var(--accent); }
 .lb-row.me { border-color: var(--accent); background: #1e2a4a; }
 .lb-row:first-of-type { background: #1a1a0a; border-color: var(--gold); }
 .lb-rank { font-size: 20px; }
 .lb-name { font-weight: 600; font-size: 15px; }
 .lb-picks { color: var(--text-muted); font-size: 13px; }
 .lb-points { font-weight: 700; font-size: 18px; color: var(--green); text-align: right; }
+.lb-arrow { color: var(--text-muted); font-size: 18px; text-align: right; }
+.you-badge { font-size: 11px; color: var(--accent); font-weight: 400; }
 
 /* By weight */
 .by-weight { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
@@ -398,20 +403,27 @@ input:focus { border-color: var(--accent); }
 .wp-pts { font-weight: 700; color: var(--green); min-width: 56px; text-align: right; }
 .wp-elim { font-size: 10px; background: var(--red); color: #fff; border-radius: 4px; padding: 2px 5px; }
 
-/* My team */
-.my-team-page { padding: 20px; }
-.team-header { text-align: center; margin-bottom: 20px; }
-.team-header h2 { font-size: 22px; font-weight: 700; }
-.team-total { font-size: 28px; font-weight: 700; color: var(--green); margin-top: 4px; }
+/* Team roster */
+.my-team-page { padding: 20px; max-width: 700px; margin: 0 auto; }
+.back-btn { background: none; border: 1px solid var(--border); color: var(--text-muted); padding: 6px 12px; border-radius: 6px; cursor: pointer; font-size: 13px; margin-bottom: 16px; transition: all 0.15s; }
+.back-btn:hover { border-color: var(--accent); color: var(--accent); }
+.team-header { margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+.team-header-top { display: flex; align-items: center; gap: 12px; }
+.team-rank-badge { font-size: 32px; }
+.team-header h2 { font-size: 22px; font-weight: 700; margin: 0; }
+.team-meta { font-size: 12px; margin-top: 2px; }
+.team-total { font-size: 28px; font-weight: 700; color: var(--green); }
 .team-roster { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 12px; }
 .team-card { text-align: center; padding: 16px 12px; }
 .team-card.eliminated { opacity: 0.5; }
 .team-weight { font-size: 11px; color: var(--accent); font-weight: 700; text-transform: uppercase; margin-bottom: 8px; }
 .team-wrestler-name { font-size: 15px; font-weight: 700; margin-bottom: 4px; }
-.team-school { font-size: 11px; color: var(--text-muted); margin-bottom: 4px; }
-.team-seed { font-size: 11px; color: var(--text-muted); }
-.team-pts { font-size: 20px; font-weight: 700; color: var(--green); margin-top: 8px; }
-.elim-tag { font-size: 10px; background: var(--red); color: #fff; border-radius: 4px; padding: 2px 6px; display: inline-block; margin-top: 6px; }
+.team-school { font-size: 11px; color: var(--text-muted); margin-bottom: 8px; }
+.team-pts-row { display: flex; align-items: center; justify-content: center; gap: 6px; margin-top: 4px; }
+.team-pts { font-size: 20px; font-weight: 700; color: var(--text-muted); }
+.team-pts.scoring { color: var(--green); }
+.elim-tag { font-size: 10px; background: var(--red); color: #fff; border-radius: 4px; padding: 2px 6px; }
+.active-tag { font-size: 10px; background: #1a3a1a; color: var(--green); border-radius: 4px; padding: 2px 6px; border: 1px solid var(--green); }
 .no-pick { margin-top: 12px; }
 
 /* Scrollbar */
