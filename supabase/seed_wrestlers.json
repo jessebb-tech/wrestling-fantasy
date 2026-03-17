@@ -1,0 +1,1862 @@
+[
+  {
+    "name": "Luke Lilledahl",
+    "school": "Penn State",
+    "weight_class": 125,
+    "seed": 1
+  },
+  {
+    "name": "Eddie Ventresca",
+    "school": "Virginia Tech",
+    "weight_class": 125,
+    "seed": 2
+  },
+  {
+    "name": "Nic Bouzakis",
+    "school": "Ohio State",
+    "weight_class": 125,
+    "seed": 3
+  },
+  {
+    "name": "Sheldon Seymour",
+    "school": "Lehigh",
+    "weight_class": 125,
+    "seed": 4
+  },
+  {
+    "name": "Troy Spratley",
+    "school": "Oklahoma State",
+    "weight_class": 125,
+    "seed": 5
+  },
+  {
+    "name": "Jore Volk",
+    "school": "Minnesota",
+    "weight_class": 125,
+    "seed": 6
+  },
+  {
+    "name": "Nico Provo",
+    "school": "Stanford",
+    "weight_class": 125,
+    "seed": 7
+  },
+  {
+    "name": "Dean Peterson",
+    "school": "Iowa",
+    "weight_class": 125,
+    "seed": 8
+  },
+  {
+    "name": "Maximo Renteria",
+    "school": "Oregon State",
+    "weight_class": 125,
+    "seed": 9
+  },
+  {
+    "name": "Marc-Anthony McGowan",
+    "school": "Princeton",
+    "weight_class": 125,
+    "seed": 10
+  },
+  {
+    "name": "Tyler Klinsky",
+    "school": "Rider",
+    "weight_class": 125,
+    "seed": 11
+  },
+  {
+    "name": "Vincent Robinson",
+    "school": "NC State",
+    "weight_class": 125,
+    "seed": 12
+  },
+  {
+    "name": "Stevo Poulin",
+    "school": "Iowa State",
+    "weight_class": 125,
+    "seed": 13
+  },
+  {
+    "name": "Jacob Moran",
+    "school": "Indiana",
+    "weight_class": 125,
+    "seed": 14
+  },
+  {
+    "name": "Koda Holeman",
+    "school": "Cal Poly",
+    "weight_class": 125,
+    "seed": 15
+  },
+  {
+    "name": "Ezekiel Witt",
+    "school": "North Dakota State",
+    "weight_class": 125,
+    "seed": 16
+  },
+  {
+    "name": "Jett Strickenberger",
+    "school": "West Virginia",
+    "weight_class": 125,
+    "seed": 17
+  },
+  {
+    "name": "Spencer Moore",
+    "school": "Illinois",
+    "weight_class": 125,
+    "seed": 18
+  },
+  {
+    "name": "Kysen Terukina",
+    "school": "North Carolina",
+    "weight_class": 125,
+    "seed": 19
+  },
+  {
+    "name": "Diego Sotelo",
+    "school": "Michigan",
+    "weight_class": 125,
+    "seed": 20
+  },
+  {
+    "name": "Conrad Hendriksen",
+    "school": "Oklahoma",
+    "weight_class": 125,
+    "seed": 21
+  },
+  {
+    "name": "Davis Motyka",
+    "school": "Penn",
+    "weight_class": 125,
+    "seed": 22
+  },
+  {
+    "name": "Nicolar Rivera",
+    "school": "Wisconsin",
+    "weight_class": 125,
+    "seed": 23
+  },
+  {
+    "name": "Ayden Smith",
+    "school": "Rutgers",
+    "weight_class": 125,
+    "seed": 24
+  },
+  {
+    "name": "Kael Lauridsen",
+    "school": "Nebraska",
+    "weight_class": 125,
+    "seed": 25
+  },
+  {
+    "name": "Cooper Flynn",
+    "school": "Chattanooga",
+    "weight_class": 125,
+    "seed": 26
+  },
+  {
+    "name": "Brady Roark",
+    "school": "South Dakota State",
+    "weight_class": 125,
+    "seed": 27
+  },
+  {
+    "name": "Andrew Binni",
+    "school": "Navy",
+    "weight_class": 125,
+    "seed": 28
+  },
+  {
+    "name": "Tyler Chappell",
+    "school": "Pittsburgh",
+    "weight_class": 125,
+    "seed": 29
+  },
+  {
+    "name": "Sulayman Bah",
+    "school": "Columbia",
+    "weight_class": 125,
+    "seed": 30
+  },
+  {
+    "name": "Desmond Pleasant",
+    "school": "Drexel",
+    "weight_class": 125,
+    "seed": 31
+  },
+  {
+    "name": "Jax Forrest",
+    "school": "Oklahoma State",
+    "weight_class": 133,
+    "seed": 1
+  },
+  {
+    "name": "Ben Davino",
+    "school": "Ohio State",
+    "weight_class": 133,
+    "seed": 2
+  },
+  {
+    "name": "Marcus Blaze",
+    "school": "Penn State",
+    "weight_class": 133,
+    "seed": 3
+  },
+  {
+    "name": "Aaron Seidel",
+    "school": "Virginia Tech",
+    "weight_class": 133,
+    "seed": 4
+  },
+  {
+    "name": "Kyler Larkin",
+    "school": "Arizona State",
+    "weight_class": 133,
+    "seed": 5
+  },
+  {
+    "name": "Drake Ayala",
+    "school": "Iowa",
+    "weight_class": 133,
+    "seed": 6
+  },
+  {
+    "name": "Lucas Byrd",
+    "school": "Illinois",
+    "weight_class": 133,
+    "seed": 7
+  },
+  {
+    "name": "Markel Baker",
+    "school": "Northern Illinois",
+    "weight_class": 133,
+    "seed": 8
+  },
+  {
+    "name": "Dominick Serrano",
+    "school": "Northern Colorado",
+    "weight_class": 133,
+    "seed": 9
+  },
+  {
+    "name": "Maximilian Leete",
+    "school": "American",
+    "weight_class": 133,
+    "seed": 10
+  },
+  {
+    "name": "Tyler Ferrara",
+    "school": "Cornell",
+    "weight_class": 133,
+    "seed": 11
+  },
+  {
+    "name": "Evan Mougalian",
+    "school": "Penn",
+    "weight_class": 133,
+    "seed": 12
+  },
+  {
+    "name": "Jacob Van Dee",
+    "school": "Nebraska",
+    "weight_class": 133,
+    "seed": 13
+  },
+  {
+    "name": "Ethan Berginc",
+    "school": "Army",
+    "weight_class": 133,
+    "seed": 14
+  },
+  {
+    "name": "Tyler Knox",
+    "school": "Stanford",
+    "weight_class": 133,
+    "seed": 15
+  },
+  {
+    "name": "Zan Fugitt",
+    "school": "Wisconsin",
+    "weight_class": 133,
+    "seed": 16
+  },
+  {
+    "name": "T.K. Davis",
+    "school": "George Washington",
+    "weight_class": 133,
+    "seed": 17
+  },
+  {
+    "name": "Gunner Andrick",
+    "school": "West Virginia",
+    "weight_class": 133,
+    "seed": 18
+  },
+  {
+    "name": "Gage Walker",
+    "school": "Missouri",
+    "weight_class": 133,
+    "seed": 19
+  },
+  {
+    "name": "Julian Farber",
+    "school": "Northern Iowa",
+    "weight_class": 133,
+    "seed": 20
+  },
+  {
+    "name": "Sean Spidle",
+    "school": "Northwestern",
+    "weight_class": 133,
+    "seed": 21
+  },
+  {
+    "name": "Zach Redding",
+    "school": "NC State",
+    "weight_class": 133,
+    "seed": 22
+  },
+  {
+    "name": "Braxton Brown",
+    "school": "Maryland",
+    "weight_class": 133,
+    "seed": 23
+  },
+  {
+    "name": "Blake Boarman",
+    "school": "Purdue",
+    "weight_class": 133,
+    "seed": 24
+  },
+  {
+    "name": "Will Betancourt",
+    "school": "Rider",
+    "weight_class": 133,
+    "seed": 25
+  },
+  {
+    "name": "Dylan Shawver",
+    "school": "Rutgers",
+    "weight_class": 133,
+    "seed": 26
+  },
+  {
+    "name": "Marcel Lopez",
+    "school": "SIU Edwardsville",
+    "weight_class": 133,
+    "seed": 27
+  },
+  {
+    "name": "Garrett Grice",
+    "school": "Iowa State",
+    "weight_class": 133,
+    "seed": 28
+  },
+  {
+    "name": "Luke Willochell",
+    "school": "Wyoming",
+    "weight_class": 133,
+    "seed": 29
+  },
+  {
+    "name": "Gabe Whisenhunt",
+    "school": "Oregon State",
+    "weight_class": 133,
+    "seed": 30
+  },
+  {
+    "name": "Gable Strickland",
+    "school": "Lehigh",
+    "weight_class": 133,
+    "seed": 31
+  },
+  {
+    "name": "Jesse Mendez",
+    "school": "Ohio State",
+    "weight_class": 141,
+    "seed": 1
+  },
+  {
+    "name": "Sergio Vega",
+    "school": "Oklahoma State",
+    "weight_class": 141,
+    "seed": 2
+  },
+  {
+    "name": "Brock Hardy",
+    "school": "Nebraska",
+    "weight_class": 141,
+    "seed": 3
+  },
+  {
+    "name": "Anthony Echemendia",
+    "school": "Iowa State",
+    "weight_class": 141,
+    "seed": 4
+  },
+  {
+    "name": "Luke Stanich",
+    "school": "Lehigh",
+    "weight_class": 141,
+    "seed": 5
+  },
+  {
+    "name": "Vince Cornella",
+    "school": "Cornell",
+    "weight_class": 141,
+    "seed": 6
+  },
+  {
+    "name": "Nasir Bailey",
+    "school": "Iowa",
+    "weight_class": 141,
+    "seed": 7
+  },
+  {
+    "name": "Vance Vombaur",
+    "school": "Minnesota",
+    "weight_class": 141,
+    "seed": 8
+  },
+  {
+    "name": "Joey Olivieri",
+    "school": "Rutgers",
+    "weight_class": 141,
+    "seed": 9
+  },
+  {
+    "name": "Jack Consiglio",
+    "school": "Stanford",
+    "weight_class": 141,
+    "seed": 10
+  },
+  {
+    "name": "CJ Composto",
+    "school": "Penn",
+    "weight_class": 141,
+    "seed": 11
+  },
+  {
+    "name": "Luke Simcox",
+    "school": "North Carolina",
+    "weight_class": 141,
+    "seed": 12
+  },
+  {
+    "name": "Wyatt Henson",
+    "school": "Lehigh",
+    "weight_class": 141,
+    "seed": 13
+  },
+  {
+    "name": "Braeden Davis",
+    "school": "Penn State",
+    "weight_class": 141,
+    "seed": 14
+  },
+  {
+    "name": "Elijah Griffin",
+    "school": "Rider",
+    "weight_class": 141,
+    "seed": 15
+  },
+  {
+    "name": "Ryan Jack",
+    "school": "NC State",
+    "weight_class": 141,
+    "seed": 16
+  },
+  {
+    "name": "Caedyn Ricciardi",
+    "school": "Navy",
+    "weight_class": 141,
+    "seed": 17
+  },
+  {
+    "name": "Carter Nogle",
+    "school": "Air Force",
+    "weight_class": 141,
+    "seed": 18
+  },
+  {
+    "name": "Haiden Drury",
+    "school": "Utah Valley",
+    "weight_class": 141,
+    "seed": 19
+  },
+  {
+    "name": "Julian Tagg",
+    "school": "South Dakota State",
+    "weight_class": 141,
+    "seed": 20
+  },
+  {
+    "name": "Tyler Wells",
+    "school": "Oklahoma",
+    "weight_class": 141,
+    "seed": 21
+  },
+  {
+    "name": "Lorenzo Frezza",
+    "school": "Columbia",
+    "weight_class": 141,
+    "seed": 22
+  },
+  {
+    "name": "Dylan Chappell",
+    "school": "Bucknell",
+    "weight_class": 141,
+    "seed": 23
+  },
+  {
+    "name": "Nash Singleton",
+    "school": "Oregon State",
+    "weight_class": 141,
+    "seed": 24
+  },
+  {
+    "name": "Tom Crook",
+    "school": "Virginia Tech",
+    "weight_class": 141,
+    "seed": 25
+  },
+  {
+    "name": "Braden Basile",
+    "school": "Army",
+    "weight_class": 141,
+    "seed": 26
+  },
+  {
+    "name": "Gable Porter",
+    "school": "Virginia",
+    "weight_class": 141,
+    "seed": 27
+  },
+  {
+    "name": "Pierson Manville",
+    "school": "Arizona State",
+    "weight_class": 141,
+    "seed": 28
+  },
+  {
+    "name": "Jordan Titus",
+    "school": "West Virginia",
+    "weight_class": 141,
+    "seed": 29
+  },
+  {
+    "name": "Dario Lemus",
+    "school": "Maryland",
+    "weight_class": 141,
+    "seed": 30
+  },
+  {
+    "name": "Billy DeKraker",
+    "school": "Northwestern",
+    "weight_class": 141,
+    "seed": 31
+  },
+  {
+    "name": "Shayne Van Ness",
+    "school": "Penn State",
+    "weight_class": 149,
+    "seed": 1
+  },
+  {
+    "name": "Jaxon Joy",
+    "school": "Cornell",
+    "weight_class": 149,
+    "seed": 2
+  },
+  {
+    "name": "Cross Wasilewski",
+    "school": "Penn",
+    "weight_class": 149,
+    "seed": 3
+  },
+  {
+    "name": "Collin Gaj",
+    "school": "Virginia Tech",
+    "weight_class": 149,
+    "seed": 4
+  },
+  {
+    "name": "Koy Buesgens",
+    "school": "NC State",
+    "weight_class": 149,
+    "seed": 5
+  },
+  {
+    "name": "Caleb Tyus",
+    "school": "SIU Edwardsville",
+    "weight_class": 149,
+    "seed": 6
+  },
+  {
+    "name": "Ethan Stiles",
+    "school": "Ohio State",
+    "weight_class": 149,
+    "seed": 7
+  },
+  {
+    "name": "Casey Swiderski",
+    "school": "Oklahoma State",
+    "weight_class": 149,
+    "seed": 8
+  },
+  {
+    "name": "David Evans",
+    "school": "Utah Valley",
+    "weight_class": 149,
+    "seed": 9
+  },
+  {
+    "name": "Aden Valencia",
+    "school": "Stanford",
+    "weight_class": 149,
+    "seed": 10
+  },
+  {
+    "name": "Lachlan McNeil",
+    "school": "Michigan",
+    "weight_class": 149,
+    "seed": 11
+  },
+  {
+    "name": "Carter Young",
+    "school": "Maryland",
+    "weight_class": 149,
+    "seed": 12
+  },
+  {
+    "name": "Joseph Zargo",
+    "school": "Wisconsin",
+    "weight_class": 149,
+    "seed": 13
+  },
+  {
+    "name": "Caleb Rathjen",
+    "school": "Northern Iowa",
+    "weight_class": 149,
+    "seed": 14
+  },
+  {
+    "name": "Ryder Block",
+    "school": "Iowa",
+    "weight_class": 149,
+    "seed": 15
+  },
+  {
+    "name": "Jacob Frost",
+    "school": "Iowa State",
+    "weight_class": 149,
+    "seed": 16
+  },
+  {
+    "name": "Lucas Kapusta",
+    "school": "Lehigh",
+    "weight_class": 149,
+    "seed": 17
+  },
+  {
+    "name": "Eugene Harney",
+    "school": "Morgan State",
+    "weight_class": 149,
+    "seed": 18
+  },
+  {
+    "name": "Brock Herman",
+    "school": "Little Rock",
+    "weight_class": 149,
+    "seed": 19
+  },
+  {
+    "name": "Chance Lamer",
+    "school": "Nebraska",
+    "weight_class": 149,
+    "seed": 20
+  },
+  {
+    "name": "Gabe Willochell",
+    "school": "Wyoming",
+    "weight_class": 149,
+    "seed": 21
+  },
+  {
+    "name": "Eligh Rivera",
+    "school": "Princeton",
+    "weight_class": 149,
+    "seed": 22
+  },
+  {
+    "name": "Max Petersen",
+    "school": "North Dakota State",
+    "weight_class": 149,
+    "seed": 23
+  },
+  {
+    "name": "Andrew Clark",
+    "school": "Rutgers",
+    "weight_class": 149,
+    "seed": 24
+  },
+  {
+    "name": "Michael Gioffre",
+    "school": "Illinois",
+    "weight_class": 149,
+    "seed": 25
+  },
+  {
+    "name": "Anderson Heap",
+    "school": "Davidson",
+    "weight_class": 149,
+    "seed": 26
+  },
+  {
+    "name": "Andre Gonzales",
+    "school": "Cal Poly",
+    "weight_class": 149,
+    "seed": 27
+  },
+  {
+    "name": "Kade Brown",
+    "school": "Pittsburgh",
+    "weight_class": 149,
+    "seed": 28
+  },
+  {
+    "name": "Kaden Cassidy",
+    "school": "George Mason",
+    "weight_class": 149,
+    "seed": 29
+  },
+  {
+    "name": "Dylan Layton",
+    "school": "Rider",
+    "weight_class": 149,
+    "seed": 30
+  },
+  {
+    "name": "Ryan Michaels",
+    "school": "Edinboro",
+    "weight_class": 149,
+    "seed": 31
+  },
+  {
+    "name": "PJ Duke",
+    "school": "Penn State",
+    "weight_class": 157,
+    "seed": 1
+  },
+  {
+    "name": "Antrell Taylor",
+    "school": "Nebraska",
+    "weight_class": 157,
+    "seed": 2
+  },
+  {
+    "name": "Meyer Shapiro",
+    "school": "Cornell",
+    "weight_class": 157,
+    "seed": 3
+  },
+  {
+    "name": "Kaleb Larkin",
+    "school": "Arizona State",
+    "weight_class": 157,
+    "seed": 4
+  },
+  {
+    "name": "Landon Robideau",
+    "school": "Oklahoma State",
+    "weight_class": 157,
+    "seed": 5
+  },
+  {
+    "name": "Jude Swisher",
+    "school": "Penn",
+    "weight_class": 157,
+    "seed": 6
+  },
+  {
+    "name": "Kannon Webster",
+    "school": "Illinois",
+    "weight_class": 157,
+    "seed": 7
+  },
+  {
+    "name": "Brandon Cannon",
+    "school": "Ohio State",
+    "weight_class": 157,
+    "seed": 8
+  },
+  {
+    "name": "Daniel Cardenas",
+    "school": "Stanford",
+    "weight_class": 157,
+    "seed": 9
+  },
+  {
+    "name": "Logan Rozynski",
+    "school": "Lehigh",
+    "weight_class": 157,
+    "seed": 10
+  },
+  {
+    "name": "Ty Watters",
+    "school": "West Virginia",
+    "weight_class": 157,
+    "seed": 11
+  },
+  {
+    "name": "Vinny Zerban",
+    "school": "Iowa State",
+    "weight_class": 157,
+    "seed": 12
+  },
+  {
+    "name": "Derek Raike",
+    "school": "Ohio",
+    "weight_class": 157,
+    "seed": 13
+  },
+  {
+    "name": "Ethen Miller",
+    "school": "Virginia Tech",
+    "weight_class": 157,
+    "seed": 14
+  },
+  {
+    "name": "Cameron Catrabone",
+    "school": "Michigan",
+    "weight_class": 157,
+    "seed": 15
+  },
+  {
+    "name": "Cael Swensen",
+    "school": "South Dakota State",
+    "weight_class": 157,
+    "seed": 16
+  },
+  {
+    "name": "Luke Mechler",
+    "school": "Wisconsin",
+    "weight_class": 157,
+    "seed": 17
+  },
+  {
+    "name": "DJ McGee",
+    "school": "George Mason",
+    "weight_class": 157,
+    "seed": 18
+  },
+  {
+    "name": "Kai Owen",
+    "school": "Columbia",
+    "weight_class": 157,
+    "seed": 19
+  },
+  {
+    "name": "Jimmy Harrington",
+    "school": "Harvard",
+    "weight_class": 157,
+    "seed": 20
+  },
+  {
+    "name": "Charlie Millard",
+    "school": "Minnesota",
+    "weight_class": 157,
+    "seed": 21
+  },
+  {
+    "name": "Colton Washleski",
+    "school": "Virginia",
+    "weight_class": 157,
+    "seed": 22
+  },
+  {
+    "name": "Kaleb Burgess",
+    "school": "Buffalo",
+    "weight_class": 157,
+    "seed": 23
+  },
+  {
+    "name": "Jaivon Jones",
+    "school": "Little Rock",
+    "weight_class": 157,
+    "seed": 24
+  },
+  {
+    "name": "Mason Shrader",
+    "school": "Central Michigan",
+    "weight_class": 157,
+    "seed": 25
+  },
+  {
+    "name": "Jonathan Ley",
+    "school": "Navy",
+    "weight_class": 157,
+    "seed": 26
+  },
+  {
+    "name": "Dylan Evans",
+    "school": "Pittsburgh",
+    "weight_class": 157,
+    "seed": 27
+  },
+  {
+    "name": "Gavin Drexler",
+    "school": "North Dakota State",
+    "weight_class": 157,
+    "seed": 28
+  },
+  {
+    "name": "Bryce Lowery",
+    "school": "Indiana",
+    "weight_class": 157,
+    "seed": 29
+  },
+  {
+    "name": "Laird Root",
+    "school": "North Carolina",
+    "weight_class": 157,
+    "seed": 30
+  },
+  {
+    "name": "Garrett McChesney",
+    "school": "Edinboro",
+    "weight_class": 157,
+    "seed": 31
+  },
+  {
+    "name": "Mitchell Mesenbrink",
+    "school": "Penn State",
+    "weight_class": 165,
+    "seed": 1
+  },
+  {
+    "name": "Joey Blaze",
+    "school": "Purdue",
+    "weight_class": 165,
+    "seed": 2
+  },
+  {
+    "name": "Mikey Caliendo",
+    "school": "Iowa",
+    "weight_class": 165,
+    "seed": 3
+  },
+  {
+    "name": "Nicco Ruiz",
+    "school": "Arizona State",
+    "weight_class": 165,
+    "seed": 4
+  },
+  {
+    "name": "LaDarion Lockett",
+    "school": "Oklahoma State",
+    "weight_class": 165,
+    "seed": 5
+  },
+  {
+    "name": "LJ Araujo",
+    "school": "Nebraska",
+    "weight_class": 165,
+    "seed": 6
+  },
+  {
+    "name": "Max Brignola",
+    "school": "Lehigh",
+    "weight_class": 165,
+    "seed": 7
+  },
+  {
+    "name": "Matty Bianchi",
+    "school": "Little Rock",
+    "weight_class": 165,
+    "seed": 8
+  },
+  {
+    "name": "Bryce Hepner",
+    "school": "North Carolina",
+    "weight_class": 165,
+    "seed": 9
+  },
+  {
+    "name": "Will Denny",
+    "school": "NC State",
+    "weight_class": 165,
+    "seed": 10
+  },
+  {
+    "name": "Ryder Downey",
+    "school": "Northern Iowa",
+    "weight_class": 165,
+    "seed": 11
+  },
+  {
+    "name": "Cesar Alvan",
+    "school": "Columbia",
+    "weight_class": 165,
+    "seed": 12
+  },
+  {
+    "name": "Andrew Sparks",
+    "school": "Minnesota",
+    "weight_class": 165,
+    "seed": 13
+  },
+  {
+    "name": "Andrew Barbosa",
+    "school": "Rutgers",
+    "weight_class": 165,
+    "seed": 14
+  },
+  {
+    "name": "Connor Euton",
+    "school": "Iowa State",
+    "weight_class": 165,
+    "seed": 15
+  },
+  {
+    "name": "Paddy Gallagher",
+    "school": "Ohio State",
+    "weight_class": 165,
+    "seed": 16
+  },
+  {
+    "name": "Braeden Scoles",
+    "school": "Illinois",
+    "weight_class": 165,
+    "seed": 17
+  },
+  {
+    "name": "Gunner Filipowicz",
+    "school": "Army",
+    "weight_class": 165,
+    "seed": 18
+  },
+  {
+    "name": "Noah Mulvaney",
+    "school": "Bucknell",
+    "weight_class": 165,
+    "seed": 19
+  },
+  {
+    "name": "Ty Whalen",
+    "school": "Princeton",
+    "weight_class": 165,
+    "seed": 20
+  },
+  {
+    "name": "Brock Woodcock",
+    "school": "SIU Edwardsville",
+    "weight_class": 165,
+    "seed": 21
+  },
+  {
+    "name": "Matthew Olguin",
+    "school": "Oregon State",
+    "weight_class": 165,
+    "seed": 22
+  },
+  {
+    "name": "Chris Earnest",
+    "school": "Kent State",
+    "weight_class": 165,
+    "seed": 23
+  },
+  {
+    "name": "Sean Seefeldt",
+    "school": "Penn",
+    "weight_class": 165,
+    "seed": 24
+  },
+  {
+    "name": "Mac Church",
+    "school": "Virginia Tech",
+    "weight_class": 165,
+    "seed": 25
+  },
+  {
+    "name": "Tyler Lillard",
+    "school": "Indiana",
+    "weight_class": 165,
+    "seed": 26
+  },
+  {
+    "name": "EJ Parco",
+    "school": "Stanford",
+    "weight_class": 165,
+    "seed": 27
+  },
+  {
+    "name": "Cody Goebel",
+    "school": "Wisconsin",
+    "weight_class": 165,
+    "seed": 28
+  },
+  {
+    "name": "Ryan Burgos",
+    "school": "Edinboro",
+    "weight_class": 165,
+    "seed": 29
+  },
+  {
+    "name": "Thomas Snipes",
+    "school": "The Citadel",
+    "weight_class": 165,
+    "seed": 30
+  },
+  {
+    "name": "Jared Keslar",
+    "school": "Pittsburgh",
+    "weight_class": 165,
+    "seed": 31
+  },
+  {
+    "name": "Levi Haines",
+    "school": "Penn State",
+    "weight_class": 174,
+    "seed": 1
+  },
+  {
+    "name": "Simon Ruiz",
+    "school": "Cornell",
+    "weight_class": 174,
+    "seed": 2
+  },
+  {
+    "name": "Christopher Minto",
+    "school": "Nebraska",
+    "weight_class": 174,
+    "seed": 3
+  },
+  {
+    "name": "Carson Kharchla",
+    "school": "Ohio State",
+    "weight_class": 174,
+    "seed": 4
+  },
+  {
+    "name": "Patrick Kennedy",
+    "school": "Iowa",
+    "weight_class": 174,
+    "seed": 5
+  },
+  {
+    "name": "Matty Singleton",
+    "school": "NC State",
+    "weight_class": 174,
+    "seed": 6
+  },
+  {
+    "name": "Cam Steed",
+    "school": "Missouri",
+    "weight_class": 174,
+    "seed": 7
+  },
+  {
+    "name": "Alex Facundo",
+    "school": "Oklahoma State",
+    "weight_class": 174,
+    "seed": 8
+  },
+  {
+    "name": "Beau Mantanona",
+    "school": "Michigan",
+    "weight_class": 174,
+    "seed": 9
+  },
+  {
+    "name": "Myles Takats",
+    "school": "Bucknell",
+    "weight_class": 174,
+    "seed": 10
+  },
+  {
+    "name": "MJ Gaitan",
+    "school": "Iowa State",
+    "weight_class": 174,
+    "seed": 11
+  },
+  {
+    "name": "Carter Schubert",
+    "school": "Oklahoma",
+    "weight_class": 174,
+    "seed": 12
+  },
+  {
+    "name": "Carter Baer",
+    "school": "Binghamton",
+    "weight_class": 174,
+    "seed": 13
+  },
+  {
+    "name": "Moses Espinoza-Owens",
+    "school": "South Dakota State",
+    "weight_class": 174,
+    "seed": 14
+  },
+  {
+    "name": "Danny Wask",
+    "school": "Navy",
+    "weight_class": 174,
+    "seed": 15
+  },
+  {
+    "name": "Nick Fine",
+    "school": "Columbia",
+    "weight_class": 174,
+    "seed": 16
+  },
+  {
+    "name": "Jared Simma",
+    "school": "Northern Iowa",
+    "weight_class": 174,
+    "seed": 17
+  },
+  {
+    "name": "Colin Kelly",
+    "school": "Illinois",
+    "weight_class": 174,
+    "seed": 18
+  },
+  {
+    "name": "Logan Messer",
+    "school": "George Mason",
+    "weight_class": 174,
+    "seed": 19
+  },
+  {
+    "name": "Daschle Lamer",
+    "school": "Oregon State",
+    "weight_class": 174,
+    "seed": 20
+  },
+  {
+    "name": "Lenny Pinto",
+    "school": "Rutgers",
+    "weight_class": 174,
+    "seed": 21
+  },
+  {
+    "name": "Brody Baumann",
+    "school": "Purdue",
+    "weight_class": 174,
+    "seed": 22
+  },
+  {
+    "name": "Luca Augustine",
+    "school": "Pittsburgh",
+    "weight_class": 174,
+    "seed": 23
+  },
+  {
+    "name": "Garrett Thompson",
+    "school": "Ohio",
+    "weight_class": 174,
+    "seed": 24
+  },
+  {
+    "name": "Sergio Desiante",
+    "school": "Virginia Tech",
+    "weight_class": 174,
+    "seed": 25
+  },
+  {
+    "name": "Derek Gilcher",
+    "school": "Indiana",
+    "weight_class": 174,
+    "seed": 26
+  },
+  {
+    "name": "Collin Carrigan",
+    "school": "North Carolina",
+    "weight_class": 174,
+    "seed": 27
+  },
+  {
+    "name": "Holden Garcia",
+    "school": "Princeton",
+    "weight_class": 174,
+    "seed": 28
+  },
+  {
+    "name": "Avery Bassett",
+    "school": "Lehigh",
+    "weight_class": 174,
+    "seed": 29
+  },
+  {
+    "name": "Riley Davis",
+    "school": "Wyoming",
+    "weight_class": 174,
+    "seed": 30
+  },
+  {
+    "name": "Cael Valencia",
+    "school": "Arizona State",
+    "weight_class": 174,
+    "seed": 31
+  },
+  {
+    "name": "Rocco Welsh",
+    "school": "Penn State",
+    "weight_class": 184,
+    "seed": 1
+  },
+  {
+    "name": "Aeoden Sinclair",
+    "school": "Missouri",
+    "weight_class": 184,
+    "seed": 2
+  },
+  {
+    "name": "Max McEnelly",
+    "school": "Minnesota",
+    "weight_class": 184,
+    "seed": 3
+  },
+  {
+    "name": "James Conway",
+    "school": "Franklin & Marshall",
+    "weight_class": 184,
+    "seed": 4
+  },
+  {
+    "name": "Brock Mantanona",
+    "school": "Michigan",
+    "weight_class": 184,
+    "seed": 5
+  },
+  {
+    "name": "Eddie Neitenbach",
+    "school": "Wyoming",
+    "weight_class": 184,
+    "seed": 6
+  },
+  {
+    "name": "Angelo Ferrari",
+    "school": "Iowa",
+    "weight_class": 184,
+    "seed": 7
+  },
+  {
+    "name": "Silas Allred",
+    "school": "Nebraska",
+    "weight_class": 184,
+    "seed": 8
+  },
+  {
+    "name": "Chris Moore",
+    "school": "Illinois",
+    "weight_class": 184,
+    "seed": 9
+  },
+  {
+    "name": "Caleb Campos",
+    "school": "American",
+    "weight_class": 184,
+    "seed": 10
+  },
+  {
+    "name": "Shane Cartagena-Walsh",
+    "school": "Rutgers",
+    "weight_class": 184,
+    "seed": 11
+  },
+  {
+    "name": "Dylan Fishback",
+    "school": "Ohio State",
+    "weight_class": 184,
+    "seed": 12
+  },
+  {
+    "name": "Isaac Dean",
+    "school": "Iowa State",
+    "weight_class": 184,
+    "seed": 13
+  },
+  {
+    "name": "Jaden Bullock",
+    "school": "Virginia Tech",
+    "weight_class": 184,
+    "seed": 14
+  },
+  {
+    "name": "Sal Perrine",
+    "school": "Ohio",
+    "weight_class": 184,
+    "seed": 15
+  },
+  {
+    "name": "Rylan Rogers",
+    "school": "Lehigh",
+    "weight_class": 184,
+    "seed": 16
+  },
+  {
+    "name": "Ian Bush",
+    "school": "West Virginia",
+    "weight_class": 184,
+    "seed": 17
+  },
+  {
+    "name": "Jake Dailey",
+    "school": "North Carolina",
+    "weight_class": 184,
+    "seed": 18
+  },
+  {
+    "name": "Jared McGill",
+    "school": "Edinboro",
+    "weight_class": 184,
+    "seed": 19
+  },
+  {
+    "name": "Brian Soldano",
+    "school": "Oklahoma",
+    "weight_class": 184,
+    "seed": 20
+  },
+  {
+    "name": "Tomas Brooker",
+    "school": "Appalachian State",
+    "weight_class": 184,
+    "seed": 21
+  },
+  {
+    "name": "Zack Ryder",
+    "school": "Oklahoma State",
+    "weight_class": 184,
+    "seed": 22
+  },
+  {
+    "name": "Ceasar Garza",
+    "school": "Cal Poly",
+    "weight_class": 184,
+    "seed": 23
+  },
+  {
+    "name": "Joe Curtis",
+    "school": "Columbia",
+    "weight_class": 184,
+    "seed": 24
+  },
+  {
+    "name": "Malachi DuVall",
+    "school": "George Mason",
+    "weight_class": 184,
+    "seed": 25
+  },
+  {
+    "name": "Chase Kranitz",
+    "school": "Pittsburgh",
+    "weight_class": 184,
+    "seed": 26
+  },
+  {
+    "name": "Aidan Brenot",
+    "school": "North Dakota State",
+    "weight_class": 184,
+    "seed": 27
+  },
+  {
+    "name": "Abraham Wojcikiewicz",
+    "school": "Stanford",
+    "weight_class": 184,
+    "seed": 28
+  },
+  {
+    "name": "Nick Fox",
+    "school": "Northern Iowa",
+    "weight_class": 184,
+    "seed": 29
+  },
+  {
+    "name": "Tyler Bienus",
+    "school": "Bucknell",
+    "weight_class": 184,
+    "seed": 30
+  },
+  {
+    "name": "Mahonri Rushton",
+    "school": "Northern Colorado",
+    "weight_class": 184,
+    "seed": 31
+  },
+  {
+    "name": "Josh Barr",
+    "school": "Penn State",
+    "weight_class": 197,
+    "seed": 1
+  },
+  {
+    "name": "Rocky Elam",
+    "school": "Iowa State",
+    "weight_class": 197,
+    "seed": 2
+  },
+  {
+    "name": "Stephen Little",
+    "school": "Little Rock",
+    "weight_class": 197,
+    "seed": 3
+  },
+  {
+    "name": "Sonny Sasso",
+    "school": "Virginia Tech",
+    "weight_class": 197,
+    "seed": 4
+  },
+  {
+    "name": "Joey Novak",
+    "school": "Wyoming",
+    "weight_class": 197,
+    "seed": 5
+  },
+  {
+    "name": "Justin Rademacher",
+    "school": "Oregon State",
+    "weight_class": 197,
+    "seed": 6
+  },
+  {
+    "name": "Cody Merrill",
+    "school": "Oklahoma State",
+    "weight_class": 197,
+    "seed": 7
+  },
+  {
+    "name": "DJ Parker",
+    "school": "Oklahoma",
+    "weight_class": 197,
+    "seed": 8
+  },
+  {
+    "name": "Angelo Posada",
+    "school": "Stanford",
+    "weight_class": 197,
+    "seed": 9
+  },
+  {
+    "name": "Mac Stout",
+    "school": "Pittsburgh",
+    "weight_class": 197,
+    "seed": 10
+  },
+  {
+    "name": "Camden McDanel",
+    "school": "Nebraska",
+    "weight_class": 197,
+    "seed": 11
+  },
+  {
+    "name": "Luke Geog",
+    "school": "Ohio State",
+    "weight_class": 197,
+    "seed": 12
+  },
+  {
+    "name": "Bennett Berge",
+    "school": "South Dakota State",
+    "weight_class": 197,
+    "seed": 13
+  },
+  {
+    "name": "Gabe Sollars",
+    "school": "Indiana",
+    "weight_class": 197,
+    "seed": 14
+  },
+  {
+    "name": "Remy Cotton",
+    "school": "Rutgers",
+    "weight_class": 197,
+    "seed": 15
+  },
+  {
+    "name": "Branson John",
+    "school": "Maryland",
+    "weight_class": 197,
+    "seed": 16
+  },
+  {
+    "name": "Dillon Bechtold",
+    "school": "Bucknell",
+    "weight_class": 197,
+    "seed": 17
+  },
+  {
+    "name": "Andrew Reall",
+    "school": "Brown",
+    "weight_class": 197,
+    "seed": 18
+  },
+  {
+    "name": "Zayne Lehman",
+    "school": "Ohio",
+    "weight_class": 197,
+    "seed": 19
+  },
+  {
+    "name": "Wyatt Ingham",
+    "school": "Wisconsin",
+    "weight_class": 197,
+    "seed": 20
+  },
+  {
+    "name": "Rune Lawrence",
+    "school": "West Virginia",
+    "weight_class": 197,
+    "seed": 21
+  },
+  {
+    "name": "Devin Wasley",
+    "school": "North Dakota State",
+    "weight_class": 197,
+    "seed": 22
+  },
+  {
+    "name": "Mikey Squires",
+    "school": "Binghamton",
+    "weight_class": 197,
+    "seed": 23
+  },
+  {
+    "name": "Brock Zurawski",
+    "school": "Rider",
+    "weight_class": 197,
+    "seed": 24
+  },
+  {
+    "name": "Evan Bates",
+    "school": "Missouri",
+    "weight_class": 197,
+    "seed": 25
+  },
+  {
+    "name": "Ben Vanadia",
+    "school": "Purdue",
+    "weight_class": 197,
+    "seed": 26
+  },
+  {
+    "name": "Gabe Arnold",
+    "school": "Iowa",
+    "weight_class": 197,
+    "seed": 27
+  },
+  {
+    "name": "Kael Wisler",
+    "school": "Michigan State",
+    "weight_class": 197,
+    "seed": 28
+  },
+  {
+    "name": "Colton Hawks",
+    "school": "Arizona State",
+    "weight_class": 197,
+    "seed": 29
+  },
+  {
+    "name": "Kade Rule",
+    "school": "Chattanooga",
+    "weight_class": 197,
+    "seed": 30
+  },
+  {
+    "name": "Kael Bennie",
+    "school": "Utah Valley",
+    "weight_class": 197,
+    "seed": 31
+  },
+  {
+    "name": "Yonger Bastida",
+    "school": "Iowa State",
+    "weight_class": 285,
+    "seed": 1
+  },
+  {
+    "name": "Isaac Trumble",
+    "school": "NC State",
+    "weight_class": 285,
+    "seed": 2
+  },
+  {
+    "name": "Taye Ghadiali",
+    "school": "Michigan",
+    "weight_class": 285,
+    "seed": 3
+  },
+  {
+    "name": "AJ Ferrari",
+    "school": "Nebraska",
+    "weight_class": 285,
+    "seed": 4
+  },
+  {
+    "name": "Nick Feldman",
+    "school": "Ohio State",
+    "weight_class": 285,
+    "seed": 5
+  },
+  {
+    "name": "Nathan Taylor",
+    "school": "Lehigh",
+    "weight_class": 285,
+    "seed": 6
+  },
+  {
+    "name": "Konner Doucet",
+    "school": "Oklahoma State",
+    "weight_class": 285,
+    "seed": 7
+  },
+  {
+    "name": "Ben Kueter",
+    "school": "Iowa",
+    "weight_class": 285,
+    "seed": 8
+  },
+  {
+    "name": "Cole Mirasola",
+    "school": "Penn State",
+    "weight_class": 285,
+    "seed": 9
+  },
+  {
+    "name": "David Szuba",
+    "school": "Arizona State",
+    "weight_class": 285,
+    "seed": 10
+  },
+  {
+    "name": "Devon Dawson",
+    "school": "Northern Illinois",
+    "weight_class": 285,
+    "seed": 11
+  },
+  {
+    "name": "Braxton Amos",
+    "school": "Wisconsin",
+    "weight_class": 285,
+    "seed": 12
+  },
+  {
+    "name": "Spencer Lanosga",
+    "school": "Navy",
+    "weight_class": 285,
+    "seed": 13
+  },
+  {
+    "name": "Koy Hopke",
+    "school": "Minnesota",
+    "weight_class": 285,
+    "seed": 14
+  },
+  {
+    "name": "Brady Colbert",
+    "school": "Army",
+    "weight_class": 285,
+    "seed": 15
+  },
+  {
+    "name": "Jimmy Mullen",
+    "school": "Virginia Tech",
+    "weight_class": 285,
+    "seed": 16
+  },
+  {
+    "name": "Vincent Mueller",
+    "school": "Columbia",
+    "weight_class": 285,
+    "seed": 17
+  },
+  {
+    "name": "Christian Carroll",
+    "school": "Wyoming",
+    "weight_class": 285,
+    "seed": 18
+  },
+  {
+    "name": "Nate Schon",
+    "school": "Drexel",
+    "weight_class": 285,
+    "seed": 19
+  },
+  {
+    "name": "Dayton Pitzer",
+    "school": "Pittsburgh",
+    "weight_class": 285,
+    "seed": 20
+  },
+  {
+    "name": "Juan Mora",
+    "school": "Oklahoma",
+    "weight_class": 285,
+    "seed": 21
+  },
+  {
+    "name": "Trevor Tinker",
+    "school": "Cal Poly",
+    "weight_class": 285,
+    "seed": 22
+  },
+  {
+    "name": "Stephan Monchery",
+    "school": "Appalachian State",
+    "weight_class": 285,
+    "seed": 23
+  },
+  {
+    "name": "Connor Barket",
+    "school": "Duke",
+    "weight_class": 285,
+    "seed": 24
+  },
+  {
+    "name": "Alex Semenenko",
+    "school": "Brown",
+    "weight_class": 285,
+    "seed": 25
+  },
+  {
+    "name": "Luke Luffman",
+    "school": "Illinois",
+    "weight_class": 285,
+    "seed": 26
+  },
+  {
+    "name": "Hunter Catka",
+    "school": "Rutgers",
+    "weight_class": 285,
+    "seed": 27
+  },
+  {
+    "name": "Jarrett Stoner",
+    "school": "Missouri",
+    "weight_class": 285,
+    "seed": 28
+  },
+  {
+    "name": "Luke Rasmussen",
+    "school": "South Dakota State",
+    "weight_class": 285,
+    "seed": 29
+  },
+  {
+    "name": "Jack Forbes",
+    "school": "Utah Valley",
+    "weight_class": 285,
+    "seed": 30
+  },
+  {
+    "name": "Brenan Morgan",
+    "school": "Virginia",
+    "weight_class": 285,
+    "seed": 31
+  }
+]
