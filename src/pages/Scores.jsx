@@ -59,7 +59,7 @@ export default function Scores() {
     <div className="scores-page">
       <header className="scores-header">
         <div className="scores-header-left">
-          <span className="logo-sm">🤼</span>
+          <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
           <h1>Scores</h1>
         </div>
         <div className="scores-header-nav">

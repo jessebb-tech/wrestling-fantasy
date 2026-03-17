@@ -83,7 +83,7 @@ body {
   text-align: center;
   margin-bottom: 36px;
 }
-.lobby-header .logo { font-size: 52px; }
+.lobby-logo { width: 140px; height: 140px; object-fit: contain; margin-bottom: 4px; }
 .lobby-header h1 { font-size: 28px; font-weight: 700; margin: 8px 0 4px; }
 .lobby-header .subtitle { color: var(--text-muted); font-size: 15px; }
 
@@ -150,6 +150,7 @@ input:focus { border-color: var(--accent); }
 .draft-header-left { display: flex; align-items: center; gap: 8px; }
 .draft-header-left h1 { font-size: 16px; font-weight: 700; }
 .logo-sm { font-size: 22px; }
+.header-logo { width: 32px; height: 32px; object-fit: contain; }
 
 .draft-header-center { flex: 1; display: flex; justify-content: center; }
 .current-pick-banner {

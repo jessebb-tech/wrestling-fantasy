@@ -77,7 +77,7 @@ export default function Lobby() {
   return (
     <div className="lobby-page">
       <div className="lobby-header">
-        <div className="logo">🤼</div>
+        <img src="/logo.png" alt="Wrestle Org" className="lobby-logo" />
         <h1>NCAA Wrestling Fantasy</h1>
         <p className="subtitle">2026 NCAA Championships</p>
       </div>
