@@ -355,83 +355,7 @@ const WIN_TYPE_LABELS = {
   decision: 'Decision', bye: 'Bye', forfeit: 'Forfeit',
 }
 
-const WRESTLING_TERMS = ['wrestler', 'wrestling', 'folkstyle', 'freestyle', 'NCAA', 'grappl']
-
-function isWrestlerArticle(d, name) {
-  if (!d || !d.extract || d.type === 'disambiguation') return false
-  // Must contain wrestling terminology
-  const haystack = ((d.description || '') + ' ' + d.extract.slice(0, 400)).toLowerCase()
-  if (!WRESTLING_TERMS.some(t => haystack.includes(t.toLowerCase()))) return false
-  // Article must actually be about this person — check last name in title or description
-  const lastName = name.split(' ').pop().toLowerCase()
-  const titleAndDesc = ((d.title || '') + ' ' + (d.description || '')).toLowerCase()
-  return titleAndDesc.includes(lastName)
-}
-
-async function fetchWikiSummary(title, name) {
-  const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)
-  if (!r.ok) return null
-  const d = await r.json()
-  return isWrestlerArticle(d, name) ? d : null
-}
-
-async function wikiSearch(query) {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*&srlimit=5`
-  const r = await fetch(url)
-  if (!r.ok) return []
-  const d = await r.json()
-  return d?.query?.search || []
-}
-
-function useBio(name, school) {
-  const [bio, setBio] = useState(null)
-  const [bioLoading, setBioLoading] = useState(true)
-
-  useEffect(() => {
-    setBio(null)
-    setBioLoading(true)
-
-    async function load() {
-      try {
-        // 1. Direct lookup with "(wrestler)" disambiguation — most precise
-        let data = await fetchWikiSummary(`${name} (wrestler)`, name)
-        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
-
-        // 2. Direct name lookup, validated as wrestling-related
-        data = await fetchWikiSummary(name, name)
-        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
-
-        // 3. Search "name NCAA wrestling" — check each result until one validates
-        let results = await wikiSearch(`${name} NCAA wrestling`)
-        for (const res of results) {
-          data = await fetchWikiSummary(res.title, name)
-          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
-        }
-
-        // 4. Search "name school wrestler"
-        results = await wikiSearch(`${name} ${school} wrestler`)
-        for (const res of results) {
-          data = await fetchWikiSummary(res.title, name)
-          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
-        }
-
-        setBio(null)
-      } catch {
-        setBio(null)
-      } finally {
-        setBioLoading(false)
-      }
-    }
-
-    load()
-  }, [name, school])
-
-  return { bio, bioLoading }
-}
-
 function WrestlerDetail({ wrestler, onBack }) {
-  const { bio, bioLoading } = useBio(wrestler.name, wrestler.school)
-
   const results = (wrestler.round_results || [])
     .slice()
     .sort((a, b) => {
@@ -458,17 +382,34 @@ function WrestlerDetail({ wrestler, onBack }) {
         </div>
       </div>
 
-      <div className="wd-bio card">
-        {bioLoading ? (
-          <span className="muted" style={{ fontSize: 13 }}>Loading bio...</span>
-        ) : bio ? (
-          <>
-            <p className="wd-bio-text">{bio.text}</p>
-            {bio.url && <a className="wd-bio-link" href={bio.url} target="_blank" rel="noreferrer">Wikipedia →</a>}
-          </>
-        ) : (
-          <span className="muted" style={{ fontSize: 13 }}>No bio found.</span>
-        )}
+      <div className="wd-stats card">
+        {(() => {
+          const wins = results.filter(r => !r.is_loss)
+          const losses = results.filter(r => r.is_loss)
+          const bonusWins = wins.filter(r => ['fall','tech_fall','major_decision'].includes(r.result_type))
+          const bonusPct = wins.length ? Math.round((bonusWins.length / wins.length) * 100) : 0
+          const avgPts = wins.length ? (wins.reduce((s, r) => s + (r.points || 0), 0) / wins.length).toFixed(1) : '—'
+          return (
+            <div className="wd-stats-grid">
+              <div className="wd-stat">
+                <div className="wd-stat-val">{wins.length}-{losses.length}</div>
+                <div className="wd-stat-label">Tournament Record</div>
+              </div>
+              <div className="wd-stat">
+                <div className="wd-stat-val">{bonusPct}%</div>
+                <div className="wd-stat-label">Bonus Point Rate</div>
+              </div>
+              <div className="wd-stat">
+                <div className="wd-stat-val">{avgPts}</div>
+                <div className="wd-stat-label">Avg Pts / Win</div>
+              </div>
+              <div className="wd-stat">
+                <div className="wd-stat-val">#{wrestler.seed}</div>
+                <div className="wd-stat-label">Seed</div>
+              </div>
+            </div>
+          )
+        })()}
       </div>
 
       {results.length === 0 ? (
