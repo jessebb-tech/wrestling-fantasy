@@ -191,7 +191,9 @@ function ActivityFeed({ wrestlers, picks, owners }) {
   // Team seed rankings — average seed per owner (lower = stronger)
   const seedRankings = owners.map(owner => {
     const ownerPicks = picks.filter(p => p.owner?.id === owner.id || p.owner_id === owner.id)
-    const seeds = ownerPicks.map(p => wrestlers.find(w => w.id === p.wrestler_id)?.seed).filter(Boolean)
+    const seeds = ownerPicks
+      .map(p => p.wrestler?.seed || wrestlers.find(w => w.id === p.wrestler_id)?.seed)
+      .filter(s => s != null && s > 0)
     const avg = seeds.length ? seeds.reduce((s, n) => s + n, 0) / seeds.length : 999
     return { name: owner.name, avg, seeds }
   }).sort((a, b) => a.avg - b.avg)
