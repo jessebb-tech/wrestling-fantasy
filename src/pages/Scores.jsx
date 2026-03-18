@@ -101,6 +101,9 @@ export default function Scores() {
           ownerScores={ownerScores}
           ownerId={ownerId}
           onSelectOwner={handleSelectOwner}
+          wrestlers={wrestlers}
+          picks={picks}
+          owners={owners}
         />
       )}
       {view === 'by_weight' && <ByWeight picks={picks} wrestlers={wrestlers} owners={owners} />}
@@ -125,7 +128,94 @@ export default function Scores() {
   )
 }
 
-function Leaderboard({ ownerScores, ownerId, onSelectOwner }) {
+const ROUND_LABELS_SHORT = {
+  R64: 'Rd 1', R32: 'Rd 2', R16: 'Qtrs', SF: 'Semis', '1st': 'Finals', '3rd': '3rd Place',
+  C1: 'Con 1', C2: 'Con 2', C3: 'Con 3', C4: 'Con 4', C5: 'All-American',
+}
+const WIN_TYPE_SHORT = {
+  fall: 'Fall', tech_fall: 'Tech Fall', major: 'Major', decision: 'Dec', bye: 'Bye', forfeit: 'Forfeit',
+}
+
+function timeAgo(dateStr) {
+  if (!dateStr) return ''
+  const diff = Date.now() - new Date(dateStr).getTime()
+  const m = Math.floor(diff / 60000)
+  if (m < 1)  return 'just now'
+  if (m < 60) return `${m}m ago`
+  const h = Math.floor(m / 60)
+  if (h < 24) return `${h}h ago`
+  return `${Math.floor(h / 24)}d ago`
+}
+
+function ActivityFeed({ wrestlers, picks, owners }) {
+  // Flatten all round_results into a single feed
+  const events = []
+  wrestlers.forEach(w => {
+    const pick  = picks.find(p => p.wrestler_id === w.id)
+    const owner = pick ? owners.find(o => o.id === pick.owner?.id || o.id === pick.owner_id) : null
+    ;(w.round_results || []).forEach(r => {
+      events.push({ wrestler: w, owner, result: r })
+    })
+  })
+
+  events.sort((a, b) => new Date(b.result.recorded_at) - new Date(a.result.recorded_at))
+  const feed = events.slice(0, 20)
+
+  if (feed.length === 0) {
+    return (
+      <div className="activity-feed">
+        <div className="af-header">Recent Results</div>
+        <p className="muted af-empty">No results recorded yet — check back once the tournament starts.</p>
+      </div>
+    )
+  }
+
+  return (
+    <div className="activity-feed">
+      <div className="af-header">Recent Results</div>
+      <div className="af-list">
+        {feed.map(({ wrestler, owner, result }, i) => (
+          <div key={i} className={`af-row ${result.is_loss ? 'af-loss' : 'af-win'}`}>
+            <div className={`af-badge ${result.is_loss ? 'af-badge-l' : 'af-badge-w'}`}>
+              {result.is_loss ? 'L' : 'W'}
+            </div>
+            <div className="af-body">
+              <div className="af-top">
+                <span className="af-wrestler">{wrestler.name}</span>
+                {owner && <span className="af-owner muted">({owner.name})</span>}
+              </div>
+              <div className="af-sub muted">
+                <span>{ROUND_LABELS_SHORT[result.round] || result.round}</span>
+                <span className="af-dot">·</span>
+                <span>{wrestler.weight_class} lbs</span>
+                {!result.is_loss && (
+                  <>
+                    <span className="af-dot">·</span>
+                    <span>{WIN_TYPE_SHORT[result.result_type] || result.result_type}</span>
+                  </>
+                )}
+                {result.opponent && (
+                  <>
+                    <span className="af-dot">·</span>
+                    <span>vs {result.opponent}</span>
+                  </>
+                )}
+              </div>
+            </div>
+            <div className="af-right">
+              {!result.is_loss && (
+                <div className="af-pts">+{result.points % 1 ? result.points.toFixed(1) : result.points}</div>
+              )}
+              <div className="af-time muted">{timeAgo(result.recorded_at)}</div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  )
+}
+
+function Leaderboard({ ownerScores, ownerId, onSelectOwner, wrestlers, picks, owners }) {
   return (
     <div className="leaderboard">
       <p className="lb-hint muted">Tap a row to view that team's roster</p>
@@ -153,6 +243,7 @@ function Leaderboard({ ownerScores, ownerId, onSelectOwner }) {
           </div>
         ))}
       </div>
+      <ActivityFeed wrestlers={wrestlers} picks={picks} owners={owners} />
     </div>
   )
 }

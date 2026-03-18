@@ -387,6 +387,26 @@ input:focus { border-color: var(--accent); }
 .lb-arrow { color: var(--text-muted); font-size: 18px; text-align: right; }
 .you-badge { font-size: 11px; color: var(--accent); font-weight: 400; }
 
+/* Activity feed */
+.activity-feed  { margin-top: 28px; }
+.af-header      { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--text-muted); margin-bottom: 10px; }
+.af-empty       { font-size: 13px; padding: 8px 0; }
+.af-list        { display: flex; flex-direction: column; gap: 2px; }
+.af-row         { display: flex; align-items: center; gap: 10px; padding: 10px 12px; border-radius: 8px; background: var(--bg2); border: 1px solid var(--border); }
+.af-row.af-loss { opacity: 0.65; }
+.af-badge       { font-size: 12px; font-weight: 800; width: 22px; height: 22px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.af-badge-w     { background: rgba(34,197,94,0.15); color: var(--green); }
+.af-badge-l     { background: rgba(239,68,68,0.12); color: var(--red); }
+.af-body        { flex: 1; min-width: 0; }
+.af-top         { display: flex; align-items: baseline; gap: 6px; }
+.af-wrestler    { font-size: 14px; font-weight: 600; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.af-owner       { font-size: 12px; white-space: nowrap; }
+.af-sub         { font-size: 11px; display: flex; flex-wrap: wrap; gap: 2px; margin-top: 2px; }
+.af-dot         { color: var(--border); }
+.af-right       { text-align: right; flex-shrink: 0; }
+.af-pts         { font-size: 13px; font-weight: 700; color: var(--green); }
+.af-time        { font-size: 11px; margin-top: 2px; }
+
 /* By weight */
 .by-weight { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
 .weight-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--accent); }
