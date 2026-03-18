@@ -188,8 +188,38 @@ function ActivityFeed({ wrestlers, picks, owners }) {
     )
   }
 
+  // Team seed rankings — average seed per owner (lower = stronger)
+  const seedRankings = owners.map(owner => {
+    const ownerPicks = picks.filter(p => p.owner?.id === owner.id || p.owner_id === owner.id)
+    const seeds = ownerPicks.map(p => wrestlers.find(w => w.id === p.wrestler_id)?.seed).filter(Boolean)
+    const avg = seeds.length ? seeds.reduce((s, n) => s + n, 0) / seeds.length : 999
+    return { name: owner.name, avg, seeds }
+  }).sort((a, b) => a.avg - b.avg)
+
   return (
     <div className="activity-feed">
+
+      {/* ── Team Seed Rankings ── */}
+      <div className="seed-rank-section">
+        <div className="af-header">🎯 Team Strength by Seed</div>
+        <div className="seed-rank-list">
+          {seedRankings.map((team, i) => (
+            <div key={i} className="seed-rank-row card">
+              <div className="seed-rank-pos">{i + 1}</div>
+              <div className="seed-rank-body">
+                <div className="seed-rank-name">{team.name}</div>
+                <div className="seed-rank-bar-wrap">
+                  <div
+                    className="seed-rank-bar"
+                    style={{ width: `${Math.max(5, 100 - ((team.avg - 1) / 15) * 100)}%` }}
+                  />
+                </div>
+              </div>
+              <div className="seed-rank-avg">avg #{team.avg.toFixed(1)}</div>
+            </div>
+          ))}
+        </div>
+      </div>
 
       {/* ── Head-to-head matchups ── */}
       {h2h.length > 0 && (
