@@ -472,6 +472,91 @@ input:focus { border-color: var(--accent); }
 .br-row-elim td { opacity: 0.45; }
 .bt-status { width: 60px; text-align: center; }
 
+/* ── Visual bracket ───────────────────────────────────────── */
+.bs-section-hdr {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: var(--text-muted);
+  padding: 4px 0 8px;
+}
+
+.bs-scroll {
+  overflow-x: auto;
+  padding-bottom: 12px;
+}
+
+.bs-col-hdr {
+  height: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-muted);
+}
+
+/* Match box */
+.bs-match {
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  background: var(--bg2);
+}
+
+/* Wrestler slot */
+.bs-slot {
+  height: 24px;
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  padding: 0 5px;
+  font-size: 0.72rem;
+  overflow: hidden;
+}
+.bs-slot.bs-won  { background: rgba(34, 197, 94, 0.12); }
+.bs-slot.bs-lost { background: rgba(239, 68, 68, 0.06); opacity: 0.7; }
+.bs-slot.bs-elim { opacity: 0.35; text-decoration: line-through; }
+.bs-slot.bs-bye,
+.bs-slot.bs-tbd  { color: var(--text-muted); }
+
+.bs-divider { height: 3px; background: var(--border); flex-shrink: 0; }
+
+.bs-empty { font-size: 0.7rem; color: var(--text-muted); }
+.bs-seed  { font-size: 0.65rem; color: var(--text-muted); min-width: 16px; text-align: right; flex-shrink: 0; }
+.bs-name  { flex: 1; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 500; }
+
+.bs-own {
+  font-size: 0.6rem;
+  font-weight: 800;
+  color: #fff;
+  background: var(--accent);
+  border-radius: 50%;
+  width: 13px;
+  height: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.bs-res       { font-size: 0.65rem; font-weight: 700; flex-shrink: 0; }
+.bs-res-w     { color: var(--green); }
+.bs-res-l     { color: var(--red); }
+
+.bs-no-cons   { padding: 8px 0 16px; }
+
+/* Consolation table */
+.cons-wrap { overflow-x: auto; padding-bottom: 20px; }
+.cons-tbl  { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
+.cons-tbl th { padding: 6px 8px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
+.cons-tbl td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
+.cons-tbl tr:hover td { background: var(--bg2); }
+
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }
 ::-webkit-scrollbar-track { background: var(--bg); }
