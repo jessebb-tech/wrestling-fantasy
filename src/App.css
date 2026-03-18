@@ -386,6 +386,16 @@ input:focus { border-color: var(--accent); }
 .lb-points { font-weight: 700; font-size: 18px; color: var(--green); text-align: right; }
 .lb-arrow { color: var(--text-muted); font-size: 18px; text-align: right; }
 .you-badge { font-size: 11px; color: var(--accent); font-weight: 400; }
+.lb-has-champ { border-color: var(--gold) !important; background: #1a1608 !important; }
+.lb-champ-badge { font-size: 11px; margin-left: 6px; color: var(--gold); font-weight: 700; }
+
+/* Champion card (team roster) */
+.champ-card { border-color: var(--gold) !important; background: #1a1608 !important; }
+.champ-banner { font-size: 11px; font-weight: 700; color: var(--gold); margin-bottom: 6px; letter-spacing: 0.05em; }
+
+/* Champion slot (bracket Finals) */
+.bs-champ { background: rgba(251,191,36,0.15) !important; border: none; }
+.bs-champ-icon { font-size: 11px; flex-shrink: 0; }
 
 /* Activity feed */
 .activity-feed  { margin-top: 28px; }

@@ -227,21 +227,32 @@ function Leaderboard({ ownerScores, ownerId, onSelectOwner, wrestlers, picks, ow
           <div>Points</div>
           <div></div>
         </div>
-        {ownerScores.map((owner, idx) => (
-          <div
-            key={owner.id}
-            className={`lb-row clickable ${owner.id === ownerId ? 'me' : ''}`}
-            onClick={() => onSelectOwner(owner)}
-          >
-            <div className="lb-rank">
-              {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
+        {ownerScores.map((owner, idx) => {
+          const champCount = owner.picks.filter(p => {
+            const w = wrestlers.find(w => w.id === p.wrestler_id)
+            return (w?.round_results || []).some(r => r.round === '1st' && !r.is_loss)
+          }).length
+
+          return (
+            <div
+              key={owner.id}
+              className={`lb-row clickable ${owner.id === ownerId ? 'me' : ''} ${champCount > 0 ? 'lb-has-champ' : ''}`}
+              onClick={() => onSelectOwner(owner)}
+            >
+              <div className="lb-rank">
+                {idx === 0 ? '🥇' : idx === 1 ? '🥈' : idx === 2 ? '🥉' : `#${idx + 1}`}
+              </div>
+              <div className="lb-name">
+                {owner.name}
+                {owner.id === ownerId && <span className="you-badge"> (You)</span>}
+                {champCount > 0 && <span className="lb-champ-badge">🏆×{champCount}</span>}
+              </div>
+              <div className="lb-picks">{owner.picks.length}/10</div>
+              <div className="lb-points">{owner.totalPoints.toFixed(1)}</div>
+              <div className="lb-arrow">›</div>
             </div>
-            <div className="lb-name">{owner.name}{owner.id === ownerId && <span className="you-badge"> (You)</span>}</div>
-            <div className="lb-picks">{owner.picks.length}/10</div>
-            <div className="lb-points">{owner.totalPoints.toFixed(1)}</div>
-            <div className="lb-arrow">›</div>
-          </div>
-        ))}
+          )
+        })}
       </div>
       <ActivityFeed wrestlers={wrestlers} picks={picks} owners={owners} />
     </div>
@@ -393,21 +404,24 @@ function TeamRoster({ owner, wrestlers, rank, isMe, onBack }) {
           const wrestler = pick ? wrestlers.find(w => w.id === pick.wrestler_id) : null
           const pts = wrestler?.total_points || 0
 
+          const isChamp = (wrestler?.round_results || []).some(r => r.round === '1st' && !r.is_loss)
+
           return (
             <div
               key={wc}
-              className={`team-card card ${wrestler?.is_eliminated ? 'eliminated' : ''} ${wrestler ? 'clickable' : ''}`}
+              className={`team-card card ${wrestler?.is_eliminated ? 'eliminated' : ''} ${wrestler ? 'clickable' : ''} ${isChamp ? 'champ-card' : ''}`}
               onClick={() => wrestler && setSelectedWrestler(wrestler)}
             >
               <div className="team-weight">{wc} lbs</div>
               {wrestler ? (
                 <>
+                  {isChamp && <div className="champ-banner">🏆 Champion</div>}
                   <div className="team-wrestler-name">{wrestler.name}</div>
                   <div className="team-school">{wrestler.school} · Seed #{wrestler.seed}</div>
                   <div className="team-pts-row">
                     <span className={`team-pts ${pts > 0 ? 'scoring' : ''}`}>{pts.toFixed(1)} pts</span>
-                    {wrestler.is_eliminated && <span className="elim-tag">OUT</span>}
-                    {!wrestler.is_eliminated && <span className="active-tag">Active</span>}
+                    {wrestler.is_eliminated && !isChamp && <span className="elim-tag">OUT</span>}
+                    {!wrestler.is_eliminated && !isChamp && <span className="active-tag">Active</span>}
                   </div>
                   {(wrestler.round_results || []).length > 0 && (
                     <div className="team-card-hint muted">Tap for results →</div>

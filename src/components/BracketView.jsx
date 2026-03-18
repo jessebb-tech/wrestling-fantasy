@@ -137,16 +137,18 @@ function Slot({ wrestler, isBye, rk, ownerMap }) {
     )
   }
 
-  const res   = getRound(wrestler, rk)
-  const won   = res && !res.is_loss
-  const lost  = res?.is_loss
-  const owner = ownerMap[wrestler.id]
-  const pts   = res && !res.is_loss
+  const res    = getRound(wrestler, rk)
+  const won    = res && !res.is_loss
+  const lost   = res?.is_loss
+  const isChamp = rk === '1st' && won
+  const owner  = ownerMap[wrestler.id]
+  const pts    = res && !res.is_loss
     ? (res.points % 1 ? res.points.toFixed(1) : String(res.points))
     : null
 
   return (
-    <div className={`bs-slot${won ? ' bs-won' : ''}${lost ? ' bs-lost' : ''}${wrestler.is_eliminated ? ' bs-elim' : ''}`}>
+    <div className={`bs-slot${won ? ' bs-won' : ''}${lost ? ' bs-lost' : ''}${wrestler.is_eliminated ? ' bs-elim' : ''}${isChamp ? ' bs-champ' : ''}`}>
+      {isChamp && <span className="bs-champ-icon">🏆</span>}
       <span className="bs-seed">{wrestler.seed}</span>
       <span className="bs-name">{wrestler.name.split(' ').slice(-1)[0]}</span>
       {owner && <span className="bs-own" title={owner}>{owner[0].toUpperCase()}</span>}
