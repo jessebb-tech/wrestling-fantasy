@@ -417,6 +417,18 @@ input:focus { border-color: var(--accent); }
 .af-pts         { font-size: 13px; font-weight: 700; color: var(--green); }
 .af-time        { font-size: 11px; margin-top: 2px; }
 
+/* Head-to-head matchups */
+.h2h-section  { margin-bottom: 24px; }
+.h2h-list     { display: flex; flex-direction: column; gap: 8px; }
+.h2h-row      { padding: 12px 14px; border-color: #7c3aed44; background: #16102a; }
+.h2h-round    { font-size: 11px; font-weight: 700; color: #a78bfa; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 8px; }
+.h2h-matchup  { display: flex; align-items: center; gap: 8px; }
+.h2h-side     { flex: 1; display: flex; flex-direction: column; gap: 2px; }
+.h2h-right    { text-align: right; align-items: flex-end; }
+.h2h-owner    { font-size: 12px; font-weight: 700; color: var(--accent); }
+.h2h-wrestler { font-size: 13px; color: var(--text); }
+.h2h-vs       { font-size: 11px; font-weight: 800; color: #a78bfa; flex-shrink: 0; padding: 0 4px; }
+
 /* By weight */
 .by-weight { padding: 20px; display: flex; flex-direction: column; gap: 12px; }
 .weight-section h3 { font-size: 15px; font-weight: 700; margin-bottom: 12px; color: var(--accent); }

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { WEIGHT_CLASSES } from '../lib/scoring'
+import { getRound, getMatchWinner, buildRounds } from '../lib/bracket'
 
 // ── Round definitions ──────────────────────────────────────
 const CHAMP_ROUNDS = [
@@ -16,7 +17,6 @@ const CONS_ROUNDS = [
   { key: 'C4', label: 'C4' },
   { key: 'C5', label: 'AA' },
 ]
-const ROUND_KEYS = ['R64', 'R32', 'R16', 'SF', '1st']
 const WIN_TYPES = [
   { value: 'decision',  label: 'Decision' },
   { value: 'major',     label: 'Major (+1)' },
@@ -26,99 +26,24 @@ const WIN_TYPES = [
   { value: 'forfeit',   label: 'Forfeit' },
 ]
 
-// ── Standard 32-man bracket seed pairs (top → bottom in Rd 1) ──
-const R64_SEED_PAIRS = [
-  [1,32],[16,17],[8,25],[9,24],[5,28],[12,21],[4,29],[13,20],
-  [3,30],[14,19],[6,27],[11,22],[7,26],[10,23],[2,31],[15,18],
-]
-
 // ── Layout constants ───────────────────────────────────────
-const SH   = 24    // slot height (px)
-const MG   = 3     // gap between two slots inside a match
-const RG   = 7     // gap between consecutive R64 matches
-const MH   = SH * 2 + MG   // match height = 51
-const UNIT = MH + RG        // vertical units per R64 slot = 58
-const HC   = SH + MG / 2    // center offset within match = 25.5
-const CW   = 170   // column width
-const XW   = 40    // connector SVG width
-const HDR  = 26    // column header height
-const BH   = 16 * UNIT      // bracket body height = 928
-const TH   = HDR + BH + 10  // total height = 964
+const SH   = 24
+const MG   = 3
+const RG   = 7
+const MH   = SH * 2 + MG
+const UNIT = MH + RG
+const HC   = SH + MG / 2
+const CW   = 170
+const XW   = 40
+const HDR  = 26
+const BH   = 16 * UNIT
+const TH   = HDR + BH + 10
 
-// y-center of match (ri=round index, mi=match index within round)
 function mCY(ri, mi) {
-  const span = 1 << ri // 2^ri
+  const span = 1 << ri
   return mi * UNIT * span + HC + UNIT * (span - 1) / 2
 }
-// y-top of match box
 function mTY(ri, mi) { return mCY(ri, mi) - HC }
-
-// ── Data helpers ───────────────────────────────────────────
-function getRound(w, rk) {
-  if (!w) return null
-  return (w.round_results || []).find(r => r.round === rk) || null
-}
-
-// Returns the winner of a match object, respecting byes vs TBDs.
-// Only R64 matches can have true byes (topBye/bottomBye).
-// In R32+, a null slot = TBD (not played yet) — never auto-advance.
-function getMatchWinner(match) {
-  const { top, bottom, topBye, bottomBye, rk } = match
-
-  // Both missing → no winner
-  if (!top && !bottom) return null
-
-  // Explicit R64 bye → the real wrestler advances
-  if (topBye)    return bottom
-  if (bottomBye) return top
-
-  // One side is TBD (prior match not yet decided) → don't auto-advance
-  if (!top || !bottom) return null
-
-  // Both wrestlers exist — check recorded results
-  const r1 = getRound(top,    rk)
-  const r2 = getRound(bottom, rk)
-  if (r1 && !r1.is_loss) return top
-  if (r2 && !r2.is_loss) return bottom
-  if (r1?.is_loss)        return bottom
-  if (r2?.is_loss)        return top
-  return null // match not yet played
-}
-
-function buildRounds(wrestlers) {
-  const bySeed = {}
-  wrestlers.forEach(w => { if (w.seed) bySeed[w.seed] = w })
-
-  const rounds = []
-  // R64: pair seeds per standard bracket; missing seed = true bye
-  const r0 = R64_SEED_PAIRS.map(([s1, s2]) => ({
-    top:       bySeed[s1] || null,
-    topBye:    !bySeed[s1],
-    bottom:    bySeed[s2] || null,
-    bottomBye: !bySeed[s2],
-    rk: 'R64',
-  }))
-  rounds.push(r0)
-
-  // R32 → Finals: only propagate confirmed winners
-  for (let r = 1; r < 5; r++) {
-    const prev = rounds[r - 1]
-    const curr = []
-    for (let m = 0; m < prev.length / 2; m++) {
-      const a = prev[2 * m]
-      const b = prev[2 * m + 1]
-      curr.push({
-        top:       getMatchWinner(a),
-        topBye:    false,
-        bottom:    getMatchWinner(b),
-        bottomBye: false,
-        rk: ROUND_KEYS[r],
-      })
-    }
-    rounds.push(curr)
-  }
-  return rounds
-}
 
 // ── Slot (one wrestler in a match) ────────────────────────
 function Slot({ wrestler, isBye, rk, ownerMap }) {

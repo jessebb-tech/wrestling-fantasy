@@ -5,6 +5,7 @@ import { useOwners } from '../hooks/useOwners'
 import { usePicks } from '../hooks/usePicks'
 import { useWrestlers } from '../hooks/useWrestlers'
 import { WEIGHT_CLASSES } from '../lib/scoring'
+import { getUpcomingMatchups } from '../lib/bracket'
 import BracketView from '../components/BracketView'
 
 export default function Scores() {
@@ -148,6 +149,21 @@ function timeAgo(dateStr) {
 }
 
 function ActivityFeed({ wrestlers, picks, owners }) {
+  // Build owner map: wrestler_id → owner name
+  const ownerMap = {}
+  picks.forEach(p => {
+    const o = owners.find(o => o.id === p.owner?.id || o.id === p.owner_id)
+    if (o) ownerMap[p.wrestler_id] = o.name
+  })
+
+  // Upcoming head-to-head matchups across all weight classes
+  const h2h = []
+  WEIGHT_CLASSES.forEach(wc => {
+    const ww = wrestlers.filter(w => w.weight_class === wc)
+    const matchups = getUpcomingMatchups(ww, ownerMap, wc)
+    matchups.filter(m => m.isH2H).forEach(m => h2h.push(m))
+  })
+
   // Flatten all round_results into a single feed
   const events = []
   wrestlers.forEach(w => {
@@ -161,7 +177,7 @@ function ActivityFeed({ wrestlers, picks, owners }) {
   events.sort((a, b) => new Date(b.result.recorded_at) - new Date(a.result.recorded_at))
   const feed = events.slice(0, 20)
 
-  if (feed.length === 0) {
+  if (feed.length === 0 && h2h.length === 0) {
     return (
       <div className="activity-feed">
         <div className="af-header">Recent Results</div>
@@ -172,7 +188,34 @@ function ActivityFeed({ wrestlers, picks, owners }) {
 
   return (
     <div className="activity-feed">
-      <div className="af-header">Recent Results</div>
+
+      {/* ── Head-to-head matchups ── */}
+      {h2h.length > 0 && (
+        <div className="h2h-section">
+          <div className="af-header">⚔️ Head-to-Head Matchups</div>
+          <div className="h2h-list">
+            {h2h.map((m, i) => (
+              <div key={i} className="h2h-row card">
+                <div className="h2h-round">{ROUND_LABELS_SHORT[m.round] || m.round} · {m.weightClass} lbs</div>
+                <div className="h2h-matchup">
+                  <div className="h2h-side">
+                    <span className="h2h-owner">{m.ownerTop}</span>
+                    <span className="h2h-wrestler">#{m.top.seed} {m.top.name}</span>
+                  </div>
+                  <div className="h2h-vs">VS</div>
+                  <div className="h2h-side h2h-right">
+                    <span className="h2h-owner">{m.ownerBottom}</span>
+                    <span className="h2h-wrestler">#{m.bottom.seed} {m.bottom.name}</span>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* ── Recent results ── */}
+      {feed.length > 0 && <div className="af-header">Recent Results</div>}
       <div className="af-list">
         {feed.map(({ wrestler, owner, result }, i) => (
           <div key={i} className={`af-row ${result.is_loss ? 'af-loss' : 'af-win'}`}>
