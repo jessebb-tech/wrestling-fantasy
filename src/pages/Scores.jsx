@@ -357,17 +357,22 @@ const WIN_TYPE_LABELS = {
 
 const WRESTLING_TERMS = ['wrestler', 'wrestling', 'folkstyle', 'freestyle', 'NCAA', 'grappl']
 
-function isWrestlerArticle(d) {
+function isWrestlerArticle(d, name) {
   if (!d || !d.extract || d.type === 'disambiguation') return false
-  const haystack = ((d.description || '') + ' ' + d.extract.slice(0, 300)).toLowerCase()
-  return WRESTLING_TERMS.some(t => haystack.includes(t.toLowerCase()))
+  // Must contain wrestling terminology
+  const haystack = ((d.description || '') + ' ' + d.extract.slice(0, 400)).toLowerCase()
+  if (!WRESTLING_TERMS.some(t => haystack.includes(t.toLowerCase()))) return false
+  // Article must actually be about this person — check last name in title or description
+  const lastName = name.split(' ').pop().toLowerCase()
+  const titleAndDesc = ((d.title || '') + ' ' + (d.description || '')).toLowerCase()
+  return titleAndDesc.includes(lastName)
 }
 
-async function fetchWikiSummary(title) {
+async function fetchWikiSummary(title, name) {
   const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)
   if (!r.ok) return null
   const d = await r.json()
-  return isWrestlerArticle(d) ? d : null
+  return isWrestlerArticle(d, name) ? d : null
 }
 
 async function wikiSearch(query) {
@@ -389,24 +394,24 @@ function useBio(name, school) {
     async function load() {
       try {
         // 1. Direct lookup with "(wrestler)" disambiguation — most precise
-        let data = await fetchWikiSummary(`${name} (wrestler)`)
+        let data = await fetchWikiSummary(`${name} (wrestler)`, name)
         if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
 
         // 2. Direct name lookup, validated as wrestling-related
-        data = await fetchWikiSummary(name)
+        data = await fetchWikiSummary(name, name)
         if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
 
         // 3. Search "name NCAA wrestling" — check each result until one validates
         let results = await wikiSearch(`${name} NCAA wrestling`)
         for (const res of results) {
-          data = await fetchWikiSummary(res.title)
+          data = await fetchWikiSummary(res.title, name)
           if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
         }
 
         // 4. Search "name school wrestler"
         results = await wikiSearch(`${name} ${school} wrestler`)
         for (const res of results) {
-          data = await fetchWikiSummary(res.title)
+          data = await fetchWikiSummary(res.title, name)
           if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
         }
 
