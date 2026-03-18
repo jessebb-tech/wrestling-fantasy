@@ -355,6 +355,22 @@ const WIN_TYPE_LABELS = {
   decision: 'Decision', bye: 'Bye', forfeit: 'Forfeit',
 }
 
+async function fetchWikiSummary(title) {
+  const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)
+  if (!r.ok) return null
+  const d = await r.json()
+  if (d.extract && d.type !== 'disambiguation') return d
+  return null
+}
+
+async function wikiSearch(query) {
+  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*&srlimit=3`
+  const r = await fetch(url)
+  if (!r.ok) return []
+  const d = await r.json()
+  return d?.query?.search || []
+}
+
 function useBio(name, school) {
   const [bio, setBio] = useState(null)
   const [bioLoading, setBioLoading] = useState(true)
@@ -362,28 +378,41 @@ function useBio(name, school) {
   useEffect(() => {
     setBio(null)
     setBioLoading(true)
-    const query = encodeURIComponent(`${name} wrestler`)
-    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`)
-      .then(r => r.ok ? r.json() : null)
-      .then(data => {
-        if (data && data.extract && data.type !== 'disambiguation') {
-          setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
-        } else {
-          // Try with school appended
-          return fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name + ' (' + school + ')')}`)
-            .then(r => r.ok ? r.json() : null)
-            .then(d => {
-              if (d && d.extract && d.type !== 'disambiguation') {
-                setBio({ text: d.extract, url: d.content_urls?.desktop?.page })
-              } else {
-                setBio(null)
-              }
-            })
+
+    async function load() {
+      try {
+        // 1. Direct name lookup
+        let data = await fetchWikiSummary(name)
+        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+
+        // 2. Direct lookup with "(wrestler)" disambiguation
+        data = await fetchWikiSummary(`${name} (wrestler)`)
+        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+
+        // 3. Wikipedia search: "name NCAA wrestling"
+        let results = await wikiSearch(`${name} NCAA wrestling`)
+        if (results.length) {
+          data = await fetchWikiSummary(results[0].title)
+          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
         }
-      })
-      .catch(() => setBio(null))
-      .finally(() => setBioLoading(false))
-  }, [name])
+
+        // 4. Wikipedia search: "name school wrestler"
+        results = await wikiSearch(`${name} ${school} wrestler`)
+        if (results.length) {
+          data = await fetchWikiSummary(results[0].title)
+          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+        }
+
+        setBio(null)
+      } catch {
+        setBio(null)
+      } finally {
+        setBioLoading(false)
+      }
+    }
+
+    load()
+  }, [name, school])
 
   return { bio, bioLoading }
 }
