@@ -197,11 +197,83 @@ function ByWeight({ picks, wrestlers, owners }) {
   )
 }
 
+const ROUND_LABELS = {
+  R64: 'Round 1', R32: 'Round 2', R16: 'Quarters', SF: 'Semis',
+  '1st': 'Finals', '3rd': '3rd Place',
+  C1: 'Consolation 1', C2: 'Consolation 2', C3: 'Consolation 3',
+  C4: 'Consolation 4', C5: 'All-American',
+}
+const WIN_TYPE_LABELS = {
+  fall: 'Fall', tech_fall: 'Tech Fall', major: 'Major Dec.',
+  decision: 'Decision', bye: 'Bye', forfeit: 'Forfeit',
+}
+
+function WrestlerDetail({ wrestler, onBack }) {
+  const results = (wrestler.round_results || [])
+    .slice()
+    .sort((a, b) => {
+      const order = ['R64','R32','R16','SF','1st','3rd','C1','C2','C3','C4','C5']
+      return order.indexOf(a.round) - order.indexOf(b.round)
+    })
+
+  return (
+    <div className="wrestler-detail">
+      <button className="back-btn" onClick={onBack}>← Back to Roster</button>
+
+      <div className="wd-header card">
+        <div className="wd-meta">
+          <div className="wd-weight">{wrestler.weight_class} lbs · Seed #{wrestler.seed}</div>
+          <h2 className="wd-name">{wrestler.name}</h2>
+          <div className="wd-school muted">{wrestler.school}</div>
+        </div>
+        <div className="wd-right">
+          <div className="wd-pts">{(wrestler.total_points || 0).toFixed(1)}</div>
+          <div className="wd-pts-label muted">pts</div>
+          {wrestler.is_eliminated
+            ? <span className="elim-tag">Eliminated</span>
+            : <span className="active-tag">Active</span>}
+        </div>
+      </div>
+
+      {results.length === 0 ? (
+        <p className="muted" style={{ padding: '16px 0' }}>No results recorded yet.</p>
+      ) : (
+        <div className="wd-results">
+          {results.map((r, i) => (
+            <div key={i} className={`wd-result-row card ${r.is_loss ? 'wd-loss' : 'wd-win'}`}>
+              <div className="wd-round">{ROUND_LABELS[r.round] || r.round}</div>
+              <div className="wd-result-badge">{r.is_loss ? 'L' : 'W'}</div>
+              <div className="wd-detail">
+                {!r.is_loss && <span className="wd-type">{WIN_TYPE_LABELS[r.result_type] || r.result_type}</span>}
+                {r.opponent && <span className="wd-opp muted">vs. {r.opponent}</span>}
+              </div>
+              {!r.is_loss && (
+                <div className="wd-earned">+{r.points % 1 ? r.points.toFixed(1) : r.points} pts</div>
+              )}
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  )
+}
+
 function TeamRoster({ owner, wrestlers, rank, isMe, onBack }) {
+  const [selectedWrestler, setSelectedWrestler] = useState(null)
+
   const totalPoints = owner.picks.reduce((sum, p) => {
     const wrestler = wrestlers.find(w => w.id === p.wrestler_id)
     return sum + (wrestler?.total_points || 0)
   }, 0)
+
+  if (selectedWrestler) {
+    return (
+      <WrestlerDetail
+        wrestler={selectedWrestler}
+        onBack={() => setSelectedWrestler(null)}
+      />
+    )
+  }
 
   const rankLabel = rank === 1 ? '🥇' : rank === 2 ? '🥈' : rank === 3 ? '🥉' : `#${rank}`
   const activeCount = owner.picks.filter(p => {
@@ -231,7 +303,11 @@ function TeamRoster({ owner, wrestlers, rank, isMe, onBack }) {
           const pts = wrestler?.total_points || 0
 
           return (
-            <div key={wc} className={`team-card card ${wrestler?.is_eliminated ? 'eliminated' : ''}`}>
+            <div
+              key={wc}
+              className={`team-card card ${wrestler?.is_eliminated ? 'eliminated' : ''} ${wrestler ? 'clickable' : ''}`}
+              onClick={() => wrestler && setSelectedWrestler(wrestler)}
+            >
               <div className="team-weight">{wc} lbs</div>
               {wrestler ? (
                 <>
@@ -242,6 +318,9 @@ function TeamRoster({ owner, wrestlers, rank, isMe, onBack }) {
                     {wrestler.is_eliminated && <span className="elim-tag">OUT</span>}
                     {!wrestler.is_eliminated && <span className="active-tag">Active</span>}
                   </div>
+                  {(wrestler.round_results || []).length > 0 && (
+                    <div className="team-card-hint muted">Tap for results →</div>
+                  )}
                 </>
               ) : (
                 <div className="no-pick muted">No pick</div>
