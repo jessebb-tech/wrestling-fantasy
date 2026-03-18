@@ -355,16 +355,23 @@ const WIN_TYPE_LABELS = {
   decision: 'Decision', bye: 'Bye', forfeit: 'Forfeit',
 }
 
+const WRESTLING_TERMS = ['wrestler', 'wrestling', 'folkstyle', 'freestyle', 'NCAA', 'grappl']
+
+function isWrestlerArticle(d) {
+  if (!d || !d.extract || d.type === 'disambiguation') return false
+  const haystack = ((d.description || '') + ' ' + d.extract.slice(0, 300)).toLowerCase()
+  return WRESTLING_TERMS.some(t => haystack.includes(t.toLowerCase()))
+}
+
 async function fetchWikiSummary(title) {
   const r = await fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(title)}`)
   if (!r.ok) return null
   const d = await r.json()
-  if (d.extract && d.type !== 'disambiguation') return d
-  return null
+  return isWrestlerArticle(d) ? d : null
 }
 
 async function wikiSearch(query) {
-  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*&srlimit=3`
+  const url = `https://en.wikipedia.org/w/api.php?action=query&list=search&srsearch=${encodeURIComponent(query)}&format=json&origin=*&srlimit=5`
   const r = await fetch(url)
   if (!r.ok) return []
   const d = await r.json()
@@ -381,26 +388,26 @@ function useBio(name, school) {
 
     async function load() {
       try {
-        // 1. Direct name lookup
-        let data = await fetchWikiSummary(name)
-        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+        // 1. Direct lookup with "(wrestler)" disambiguation — most precise
+        let data = await fetchWikiSummary(`${name} (wrestler)`)
+        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
 
-        // 2. Direct lookup with "(wrestler)" disambiguation
-        data = await fetchWikiSummary(`${name} (wrestler)`)
-        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+        // 2. Direct name lookup, validated as wrestling-related
+        data = await fetchWikiSummary(name)
+        if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
 
-        // 3. Wikipedia search: "name NCAA wrestling"
+        // 3. Search "name NCAA wrestling" — check each result until one validates
         let results = await wikiSearch(`${name} NCAA wrestling`)
-        if (results.length) {
-          data = await fetchWikiSummary(results[0].title)
-          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+        for (const res of results) {
+          data = await fetchWikiSummary(res.title)
+          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
         }
 
-        // 4. Wikipedia search: "name school wrestler"
+        // 4. Search "name school wrestler"
         results = await wikiSearch(`${name} ${school} wrestler`)
-        if (results.length) {
-          data = await fetchWikiSummary(results[0].title)
-          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page, source: 'Wikipedia' })
+        for (const res of results) {
+          data = await fetchWikiSummary(res.title)
+          if (data) return setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
         }
 
         setBio(null)
