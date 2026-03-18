@@ -192,8 +192,8 @@ function ActivityFeed({ wrestlers, picks, owners }) {
   return (
     <div className="activity-feed">
 
-      {/* ── Team Seed Rankings ── */}
-      <div className="seed-rank-section">
+      {/* ── Team Seed Rankings — hidden once tournament results start ── */}
+      {feed.length === 0 && <div className="seed-rank-section">
         <div className="af-header">🎯 Team Strength by Seed</div>
         <div className="seed-rank-list">
           {seedRankings.map((team, i) => (
@@ -212,7 +212,7 @@ function ActivityFeed({ wrestlers, picks, owners }) {
             </div>
           ))}
         </div>
-      </div>
+      </div>}
 
       {/* ── Head-to-head matchups ── */}
       {h2h.length > 0 && (
