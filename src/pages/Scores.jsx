@@ -5,13 +5,14 @@ import { useOwners } from '../hooks/useOwners'
 import { usePicks } from '../hooks/usePicks'
 import { useWrestlers } from '../hooks/useWrestlers'
 import { WEIGHT_CLASSES } from '../lib/scoring'
+import BracketView from '../components/BracketView'
 
 export default function Scores() {
   const navigate = useNavigate()
   const { owners } = useOwners()
   const { picks } = usePicks()
   const { wrestlers } = useWrestlers()
-  const [view, setView] = useState('leaderboard') // 'leaderboard' | 'by_weight' | 'team'
+  const [view, setView] = useState('leaderboard') // 'leaderboard' | 'by_weight' | 'team' | 'brackets'
   const [selectedOwner, setSelectedOwner] = useState(null)
   const [lastUpdated, setLastUpdated] = useState(null)
 
@@ -20,6 +21,10 @@ export default function Scores() {
   useEffect(() => {
     if (!ownerId) navigate('/')
   }, [ownerId, navigate])
+
+  // Check if current user is commissioner
+  const currentOwner = owners.find(o => o.id === ownerId)
+  const isCommissioner = currentOwner?.is_commissioner === true
 
   useEffect(() => {
     if (wrestlers.length > 0) {
@@ -77,6 +82,10 @@ export default function Scores() {
               onClick={() => handleSelectOwner(myOwner)}
             >My Team</button>
           )}
+          <button
+            className={`tab-btn ${view === 'brackets' ? 'active' : ''}`}
+            onClick={() => { setView('brackets'); setSelectedOwner(null) }}
+          >Brackets</button>
           <button className="btn-sm" onClick={() => navigate('/draft')}>Draft</button>
         </div>
       </header>
@@ -95,6 +104,14 @@ export default function Scores() {
         />
       )}
       {view === 'by_weight' && <ByWeight picks={picks} wrestlers={wrestlers} owners={owners} />}
+      {view === 'brackets' && (
+        <BracketView
+          wrestlers={wrestlers}
+          picks={picks}
+          owners={owners}
+          isCommissioner={isCommissioner}
+        />
+      )}
       {view === 'team' && selectedOwner && (
         <TeamRoster
           owner={selectedOwner}
