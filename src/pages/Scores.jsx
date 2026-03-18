@@ -355,7 +355,42 @@ const WIN_TYPE_LABELS = {
   decision: 'Decision', bye: 'Bye', forfeit: 'Forfeit',
 }
 
+function useBio(name, school) {
+  const [bio, setBio] = useState(null)
+  const [bioLoading, setBioLoading] = useState(true)
+
+  useEffect(() => {
+    setBio(null)
+    setBioLoading(true)
+    const query = encodeURIComponent(`${name} wrestler`)
+    fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name)}`)
+      .then(r => r.ok ? r.json() : null)
+      .then(data => {
+        if (data && data.extract && data.type !== 'disambiguation') {
+          setBio({ text: data.extract, url: data.content_urls?.desktop?.page })
+        } else {
+          // Try with school appended
+          return fetch(`https://en.wikipedia.org/api/rest_v1/page/summary/${encodeURIComponent(name + ' (' + school + ')')}`)
+            .then(r => r.ok ? r.json() : null)
+            .then(d => {
+              if (d && d.extract && d.type !== 'disambiguation') {
+                setBio({ text: d.extract, url: d.content_urls?.desktop?.page })
+              } else {
+                setBio(null)
+              }
+            })
+        }
+      })
+      .catch(() => setBio(null))
+      .finally(() => setBioLoading(false))
+  }, [name])
+
+  return { bio, bioLoading }
+}
+
 function WrestlerDetail({ wrestler, onBack }) {
+  const { bio, bioLoading } = useBio(wrestler.name, wrestler.school)
+
   const results = (wrestler.round_results || [])
     .slice()
     .sort((a, b) => {
@@ -380,6 +415,19 @@ function WrestlerDetail({ wrestler, onBack }) {
             ? <span className="elim-tag">Eliminated</span>
             : <span className="active-tag">Active</span>}
         </div>
+      </div>
+
+      <div className="wd-bio card">
+        {bioLoading ? (
+          <span className="muted" style={{ fontSize: 13 }}>Loading bio...</span>
+        ) : bio ? (
+          <>
+            <p className="wd-bio-text">{bio.text}</p>
+            {bio.url && <a className="wd-bio-link" href={bio.url} target="_blank" rel="noreferrer">Wikipedia →</a>}
+          </>
+        ) : (
+          <span className="muted" style={{ fontSize: 13 }}>No bio found.</span>
+        )}
       </div>
 
       {results.length === 0 ? (
