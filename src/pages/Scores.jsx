@@ -179,15 +179,6 @@ function ActivityFeed({ wrestlers, picks, owners }) {
   events.sort((a, b) => new Date(b.result.recorded_at) - new Date(a.result.recorded_at))
   const feed = events.slice(0, 20)
 
-  if (feed.length === 0 && h2h.length === 0) {
-    return (
-      <div className="activity-feed">
-        <div className="af-header">Recent Results</div>
-        <p className="muted af-empty">No results recorded yet — check back once the tournament starts.</p>
-      </div>
-    )
-  }
-
   // Team seed rankings — average seed per owner (lower = stronger)
   const seedRankings = owners.map(owner => {
     const ownerPicks = picks.filter(p => p.owner?.id === owner.id || p.owner_id === owner.id)
@@ -249,7 +240,10 @@ function ActivityFeed({ wrestlers, picks, owners }) {
       )}
 
       {/* ── Recent results ── */}
-      {feed.length > 0 && <div className="af-header">Recent Results</div>}
+      <div className="af-header">Recent Results</div>
+      {feed.length === 0 && (
+        <p className="muted af-empty">No results recorded yet — check back once the tournament starts.</p>
+      )}
       <div className="af-list">
         {feed.map(({ wrestler, owner, result }, i) => (
           <div key={i} className={`af-row ${result.is_loss ? 'af-loss' : 'af-win'}`}>
