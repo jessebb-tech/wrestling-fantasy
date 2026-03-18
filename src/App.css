@@ -391,6 +391,13 @@ input:focus { border-color: var(--accent); }
   background: linear-gradient(135deg, var(--gold), #fff8e1);
   -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
 }
+
+@media (min-width: 768px) {
+  .scores-header { height: 80px; padding: 0 24px; }
+  .header-logo { width: 64px !important; height: 64px !important; }
+  .scores-brand-title { font-size: 26px; }
+  .scores-header-left { gap: 16px; }
+}
 .scores-brand-year { font-size: 10px; letter-spacing: 0.08em; }
 .scores-header-nav { display: flex; align-items: center; gap: 4px; }
 
