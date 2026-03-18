@@ -483,11 +483,7 @@ export default function BracketView({ wrestlers, picks, owners, isCommissioner }
       {/* ── Championship bracket ── */}
       <div className="bs-section-hdr">Championship Bracket</div>
 
-      {/* Mobile: round-by-round card view */}
-      <MobileBracket rounds={rounds} ownerMap={ownerMap} />
-
-      {/* Desktop: horizontal tree bracket */}
-      <div className="bs-scroll bs-desktop-only">
+      <div className="bs-scroll">
         <div style={{ position: 'relative', width: totalW, height: TH }}>
 
           {/* Column headers */}
