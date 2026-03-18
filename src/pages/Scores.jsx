@@ -61,37 +61,44 @@ export default function Scores() {
     setSelectedOwner(null)
   }
 
+  const navButtons = (
+    <div className="scores-header-nav">
+      <button
+        className={`tab-btn ${view === 'leaderboard' ? 'active' : ''}`}
+        onClick={() => { setView('leaderboard'); setSelectedOwner(null) }}
+      >Leaderboard</button>
+      <button
+        className={`tab-btn ${view === 'by_weight' ? 'active' : ''}`}
+        onClick={() => { setView('by_weight'); setSelectedOwner(null) }}
+      >By Weight</button>
+      {myOwner && (
+        <button
+          className={`tab-btn ${view === 'team' && selectedOwner?.id === myOwner.id ? 'active' : ''}`}
+          onClick={() => handleSelectOwner(myOwner)}
+        >My Team</button>
+      )}
+      <button
+        className={`tab-btn ${view === 'brackets' ? 'active' : ''}`}
+        onClick={() => { setView('brackets'); setSelectedOwner(null) }}
+      >Brackets</button>
+      <button className="btn-sm" onClick={() => navigate('/draft')}>Draft</button>
+    </div>
+  )
+
   return (
     <div className="scores-page">
-      <header className="scores-header">
-        <div className="scores-header-left">
-          <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
-          <div className="scores-brand">
-            <span className="scores-brand-title">March Matness</span>
+      <div className="scores-header-wrap">
+        <header className="scores-header">
+          <div className="scores-header-left">
+            <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
+            <div className="scores-brand">
+              <span className="scores-brand-title">March Matness</span>
+            </div>
           </div>
-        </div>
-        <div className="scores-header-nav">
-          <button
-            className={`tab-btn ${view === 'leaderboard' ? 'active' : ''}`}
-            onClick={() => { setView('leaderboard'); setSelectedOwner(null) }}
-          >Leaderboard</button>
-          <button
-            className={`tab-btn ${view === 'by_weight' ? 'active' : ''}`}
-            onClick={() => { setView('by_weight'); setSelectedOwner(null) }}
-          >By Weight</button>
-          {myOwner && (
-            <button
-              className={`tab-btn ${view === 'team' && selectedOwner?.id === myOwner.id ? 'active' : ''}`}
-              onClick={() => handleSelectOwner(myOwner)}
-            >My Team</button>
-          )}
-          <button
-            className={`tab-btn ${view === 'brackets' ? 'active' : ''}`}
-            onClick={() => { setView('brackets'); setSelectedOwner(null) }}
-          >Brackets</button>
-          <button className="btn-sm" onClick={() => navigate('/draft')}>Draft</button>
-        </div>
-      </header>
+          <div className="scores-header-nav-desktop">{navButtons}</div>
+        </header>
+        <div className="scores-header-nav-mobile">{navButtons}</div>
+      </div>
 
       {lastUpdated && (
         <div className="update-banner">
