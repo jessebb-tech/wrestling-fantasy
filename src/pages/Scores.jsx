@@ -75,10 +75,6 @@ export default function Scores() {
             className={`tab-btn ${view === 'leaderboard' ? 'active' : ''}`}
             onClick={() => { setView('leaderboard'); setSelectedOwner(null) }}
           >Leaderboard</button>
-          <button
-            className={`tab-btn ${view === 'by_weight' ? 'active' : ''}`}
-            onClick={() => { setView('by_weight'); setSelectedOwner(null) }}
-          >By Weight</button>
           {myOwner && (
             <button
               className={`tab-btn ${view === 'team' && selectedOwner?.id === myOwner.id ? 'active' : ''}`}
@@ -89,6 +85,10 @@ export default function Scores() {
             className={`tab-btn ${view === 'brackets' ? 'active' : ''}`}
             onClick={() => { setView('brackets'); setSelectedOwner(null) }}
           >Brackets</button>
+          <button
+            className={`tab-btn ${view === 'by_weight' ? 'active' : ''}`}
+            onClick={() => { setView('by_weight'); setSelectedOwner(null) }}
+          >By Weight</button>
           <button className="btn-sm" onClick={() => navigate('/draft')}>Draft</button>
         </div>
       </header>
