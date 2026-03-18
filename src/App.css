@@ -178,7 +178,7 @@ input:focus { border-color: var(--accent); }
 .draft-header-left { display: flex; align-items: center; gap: 8px; }
 .draft-header-left h1 { font-size: 16px; font-weight: 700; }
 .logo-sm { font-size: 22px; }
-.header-logo { width: 32px; height: 32px; object-fit: contain; }
+.header-logo { width: 52px; height: 52px; object-fit: contain; }
 
 .draft-header-center { flex: 1; display: flex; justify-content: center; }
 .current-pick-banner {
@@ -382,7 +382,7 @@ input:focus { border-color: var(--accent); }
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 16px; height: 52px;
   background: var(--bg2); border-bottom: 1px solid var(--border);
-  flex-shrink: 0;
+  flex-shrink: 0; overflow: visible;
 }
 .scores-header-left { display: flex; align-items: center; gap: 10px; }
 .scores-brand { display: flex; flex-direction: column; line-height: 1.1; }
