@@ -79,7 +79,6 @@ export default function Lobby() {
       <div className="lobby-hero">
         <img src="/logo.png" alt="Wrestle Org" className="lobby-logo" />
         <div className="lobby-title-block">
-          <div className="lobby-eyebrow">2026 NCAA Wrestling Championships</div>
           <h1 className="lobby-title">March<br />Matness</h1>
           <div className="lobby-tagline">10 Teams · 10 Weight Classes · One Champion</div>
         </div>
