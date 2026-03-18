@@ -76,10 +76,13 @@ export default function Lobby() {
 
   return (
     <div className="lobby-page">
-      <div className="lobby-header">
+      <div className="lobby-hero">
         <img src="/logo.png" alt="Wrestle Org" className="lobby-logo" />
-        <h1>NCAA Wrestling Fantasy</h1>
-        <p className="subtitle">2026 NCAA Championships</p>
+        <div className="lobby-title-block">
+          <div className="lobby-eyebrow">2026 NCAA Wrestling Championships</div>
+          <h1 className="lobby-title">March<br />Matness</h1>
+          <div className="lobby-tagline">10 Teams · 10 Weight Classes · One Champion</div>
+        </div>
       </div>
 
       <div className="lobby-grid" style={{ maxWidth: 420, margin: '0 auto' }}>

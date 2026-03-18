@@ -66,7 +66,10 @@ export default function Scores() {
       <header className="scores-header">
         <div className="scores-header-left">
           <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
-          <h1>Scores</h1>
+          <div className="scores-brand">
+            <span className="scores-brand-title">March Matness</span>
+            <span className="scores-brand-year muted">2026</span>
+          </div>
         </div>
         <div className="scores-header-nav">
           <button

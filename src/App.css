@@ -79,13 +79,41 @@ body {
   padding: 40px 20px;
 }
 
-.lobby-header {
+.lobby-hero {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   text-align: center;
-  margin-bottom: 36px;
+  margin-bottom: 40px;
+  padding: 16px 0;
 }
-.lobby-logo { width: 140px; height: 140px; object-fit: contain; margin-bottom: 4px; }
-.lobby-header h1 { font-size: 28px; font-weight: 700; margin: 8px 0 4px; }
-.lobby-header .subtitle { color: var(--text-muted); font-size: 15px; }
+.lobby-logo {
+  width: 110px; height: 110px; object-fit: contain;
+  margin-bottom: 20px;
+  filter: drop-shadow(0 0 20px rgba(251,191,36,0.25));
+}
+.lobby-title-block { display: flex; flex-direction: column; align-items: center; gap: 8px; }
+.lobby-eyebrow {
+  font-size: 11px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text-muted);
+}
+.lobby-title {
+  font-size: 64px; font-weight: 900; line-height: 0.9;
+  letter-spacing: -0.02em;
+  background: linear-gradient(135deg, var(--gold) 0%, #fff8e1 50%, var(--gold) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-transform: uppercase;
+  margin: 0;
+}
+.lobby-tagline {
+  font-size: 13px; color: var(--text-muted); letter-spacing: 0.04em; margin-top: 4px;
+}
+
+@media (max-width: 480px) {
+  .lobby-title { font-size: 48px; }
+}
 
 .lobby-grid {
   display: grid;
@@ -356,9 +384,15 @@ input:focus { border-color: var(--accent); }
   background: var(--bg2); border-bottom: 1px solid var(--border);
   flex-shrink: 0;
 }
-.scores-header-left { display: flex; align-items: center; gap: 8px; }
-.scores-header-left h1 { font-size: 16px; font-weight: 700; }
-.scores-header-nav { display: flex; align-items: center; gap: 8px; }
+.scores-header-left { display: flex; align-items: center; gap: 10px; }
+.scores-brand { display: flex; flex-direction: column; line-height: 1.1; }
+.scores-brand-title {
+  font-size: 15px; font-weight: 900; letter-spacing: 0.01em; text-transform: uppercase;
+  background: linear-gradient(135deg, var(--gold), #fff8e1);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.scores-brand-year { font-size: 10px; letter-spacing: 0.08em; }
+.scores-header-nav { display: flex; align-items: center; gap: 4px; }
 
 .update-banner { padding: 6px 16px; background: var(--bg2); border-bottom: 1px solid var(--border); font-size: 12px; color: var(--text-muted); }
 
