@@ -212,6 +212,69 @@ function Connectors({ ri }) {
   )
 }
 
+// ── Mobile bracket (round-by-round card view) ─────────────
+const WIN_SHORT = {
+  fall: 'Fall', tech_fall: 'Tech Fall', major: 'Major Dec.',
+  decision: 'Dec.', bye: 'Bye', forfeit: 'Forfeit',
+}
+
+function MobileSlot({ wrestler, isBye, rk, isWinner, ownerMap }) {
+  if (isBye)     return <div className="mb-slot mb-empty"><span className="muted">BYE</span></div>
+  if (!wrestler) return <div className="mb-slot mb-empty"><span className="muted">TBD</span></div>
+
+  const res   = getRound(wrestler, rk)
+  const owned = ownerMap[wrestler.id]
+
+  return (
+    <div className={`mb-slot${isWinner ? ' mb-winner' : ''}${res?.is_loss ? ' mb-loser' : ''}`}>
+      <div className="mb-slot-top">
+        <span className="mb-seed">#{wrestler.seed}</span>
+        <span className="mb-name">{wrestler.name}</span>
+        {owned && <span className="mb-own">{owned.split(' ')[0]}</span>}
+      </div>
+      {res && !res.is_loss && (
+        <div className="mb-result">
+          {WIN_SHORT[res.result_type] || res.result_type}
+          <span className="mb-pts"> +{res.points % 1 ? res.points.toFixed(1) : res.points} pts</span>
+        </div>
+      )}
+    </div>
+  )
+}
+
+function MobileBracket({ rounds, ownerMap }) {
+  const [selRound, setSelRound] = useState(0)
+  const matches = rounds[selRound] || []
+
+  return (
+    <div className="mb-wrap">
+      <div className="mb-round-tabs">
+        {CHAMP_ROUNDS.map((cr, i) => (
+          <button
+            key={i}
+            className={`mb-round-tab${selRound === i ? ' active' : ''}`}
+            onClick={() => setSelRound(i)}
+          >{cr.label}</button>
+        ))}
+      </div>
+
+      <div className="mb-matches">
+        {matches.map((match, mi) => {
+          const winner = getMatchWinner(match)
+          const hasResult = winner !== null
+          return (
+            <div key={mi} className={`mb-match card${hasResult ? ' mb-decided' : ''}`}>
+              <MobileSlot wrestler={match.top}    isBye={match.topBye}    rk={match.rk} isWinner={winner === match.top}    ownerMap={ownerMap} />
+              <div className="mb-vs">vs</div>
+              <MobileSlot wrestler={match.bottom} isBye={match.bottomBye} rk={match.rk} isWinner={winner === match.bottom} ownerMap={ownerMap} />
+            </div>
+          )
+        })}
+      </div>
+    </div>
+  )
+}
+
 // ── Consolation table ─────────────────────────────────────
 const CONS_KEYS = CONS_ROUNDS.map(c => c.key)
 
@@ -420,7 +483,11 @@ export default function BracketView({ wrestlers, picks, owners, isCommissioner }
       {/* ── Championship bracket ── */}
       <div className="bs-section-hdr">Championship Bracket</div>
 
-      <div className="bs-scroll">
+      {/* Mobile: round-by-round card view */}
+      <MobileBracket rounds={rounds} ownerMap={ownerMap} />
+
+      {/* Desktop: horizontal tree bracket */}
+      <div className="bs-scroll bs-desktop-only">
         <div style={{ position: 'relative', width: totalW, height: TH }}>
 
           {/* Column headers */}
