@@ -59,17 +59,30 @@ function getRound(w, rk) {
   return (w.round_results || []).find(r => r.round === rk) || null
 }
 
-function getWinner(w1, w2, rk) {
-  if (!w1 && !w2) return null
-  if (!w1) return w2
-  if (!w2) return w1
-  const r1 = getRound(w1, rk)
-  const r2 = getRound(w2, rk)
-  if (r1 && !r1.is_loss) return w1
-  if (r2 && !r2.is_loss) return w2
-  if (r1?.is_loss) return w2
-  if (r2?.is_loss) return w1
-  return null
+// Returns the winner of a match object, respecting byes vs TBDs.
+// Only R64 matches can have true byes (topBye/bottomBye).
+// In R32+, a null slot = TBD (not played yet) — never auto-advance.
+function getMatchWinner(match) {
+  const { top, bottom, topBye, bottomBye, rk } = match
+
+  // Both missing → no winner
+  if (!top && !bottom) return null
+
+  // Explicit R64 bye → the real wrestler advances
+  if (topBye)    return bottom
+  if (bottomBye) return top
+
+  // One side is TBD (prior match not yet decided) → don't auto-advance
+  if (!top || !bottom) return null
+
+  // Both wrestlers exist — check recorded results
+  const r1 = getRound(top,    rk)
+  const r2 = getRound(bottom, rk)
+  if (r1 && !r1.is_loss) return top
+  if (r2 && !r2.is_loss) return bottom
+  if (r1?.is_loss)        return bottom
+  if (r2?.is_loss)        return top
+  return null // match not yet played
 }
 
 function buildRounds(wrestlers) {
@@ -77,17 +90,17 @@ function buildRounds(wrestlers) {
   wrestlers.forEach(w => { if (w.seed) bySeed[w.seed] = w })
 
   const rounds = []
-  // R64: pair seeds per standard bracket
+  // R64: pair seeds per standard bracket; missing seed = true bye
   const r0 = R64_SEED_PAIRS.map(([s1, s2]) => ({
-    top: bySeed[s1] || null,
-    topBye: !bySeed[s1],
-    bottom: bySeed[s2] || null,
+    top:       bySeed[s1] || null,
+    topBye:    !bySeed[s1],
+    bottom:    bySeed[s2] || null,
     bottomBye: !bySeed[s2],
     rk: 'R64',
   }))
   rounds.push(r0)
 
-  // R32 → Finals: winners of previous round advance
+  // R32 → Finals: only propagate confirmed winners
   for (let r = 1; r < 5; r++) {
     const prev = rounds[r - 1]
     const curr = []
@@ -95,9 +108,9 @@ function buildRounds(wrestlers) {
       const a = prev[2 * m]
       const b = prev[2 * m + 1]
       curr.push({
-        top: getWinner(a.top, a.bottom, a.rk),
-        topBye: false,
-        bottom: getWinner(b.top, b.bottom, b.rk),
+        top:       getMatchWinner(a),
+        topBye:    false,
+        bottom:    getMatchWinner(b),
         bottomBye: false,
         rk: ROUND_KEYS[r],
       })
