@@ -393,8 +393,8 @@ input:focus { border-color: var(--accent); }
 }
 
 @media (min-width: 768px) {
-  .scores-header { height: 80px; padding: 0 24px; }
-  .header-logo { width: 64px !important; height: 64px !important; }
+  .scores-header { height: 80px; padding: 0 24px; overflow: visible; }
+  .header-logo { width: 90px !important; height: 90px !important; margin-bottom: -10px; }
   .scores-brand-title { font-size: 26px; }
   .scores-header-left { gap: 16px; }
 }
