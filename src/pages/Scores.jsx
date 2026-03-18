@@ -68,7 +68,6 @@ export default function Scores() {
           <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
           <div className="scores-brand">
             <span className="scores-brand-title">March Matness</span>
-            <span className="scores-brand-year muted">2026</span>
           </div>
         </div>
         <div className="scores-header-nav">
