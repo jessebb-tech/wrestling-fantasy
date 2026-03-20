@@ -41,9 +41,12 @@ export function getMatchLoser(match) {
   return winner === match.top ? match.bottom : match.top
 }
 
-// Internal: winner of a consolation match (no byes, null = TBD).
+// Internal: winner of a consolation match.
+// If one slot is null (missing seed / bye), auto-advance the other.
 function getConsMatchWinner({ top, bottom, rk }) {
-  if (!top || !bottom) return null
+  if (!top && !bottom) return null
+  if (!top)    return bottom   // bye / missing opponent → auto-advance
+  if (!bottom) return top      // bye / missing opponent → auto-advance
   const r1 = getRound(top, rk)
   const r2 = getRound(bottom, rk)
   if (r1 && !r1.is_loss) return top
