@@ -64,12 +64,19 @@ export default function Scores() {
   return (
     <div className="scores-page">
       <header className="scores-header">
-        <div className="scores-header-left" onClick={handleBackToLeaderboard} style={{ cursor: 'pointer' }}>
+        {/* ⚠️ NAV BUTTON — DO NOT remove onClick or convert back to div.
+             Clicking logo/title navigates back to leaderboard. */}
+        <button
+          type="button"
+          className="scores-header-left"
+          onClick={handleBackToLeaderboard}
+          aria-label="Go to leaderboard"
+        >
           <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
           <div className="scores-brand">
             <span className="scores-brand-title">March Matness</span>
           </div>
-        </div>
+        </button>
         <div className="scores-header-nav">
           <button
             className={`tab-btn ${view === 'leaderboard' ? 'active' : ''}`}

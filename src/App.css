@@ -384,7 +384,9 @@ input:focus { border-color: var(--accent); }
   background: var(--bg2); border-bottom: 1px solid var(--border);
   flex-shrink: 0; overflow: visible;
 }
-.scores-header-left { display: flex; align-items: center; gap: 10px; }
+/* ⚠️ scores-header-left is a <button> — reset strips browser button styles */
+button.scores-header-left { background: none; border: none; padding: 0; font: inherit; color: inherit; text-align: left; }
+.scores-header-left { display: flex; align-items: center; gap: 10px; cursor: pointer; }
 .scores-brand { display: flex; flex-direction: column; line-height: 1.1; }
 .scores-brand-title {
   font-size: 15px; font-weight: 900; letter-spacing: 0.01em; text-transform: uppercase;
