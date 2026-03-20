@@ -64,7 +64,7 @@ export default function Scores() {
   return (
     <div className="scores-page">
       <header className="scores-header">
-        <div className="scores-header-left">
+        <div className="scores-header-left" onClick={handleBackToLeaderboard} style={{ cursor: 'pointer' }}>
           <img src="/logo.png" alt="Wrestle Org" className="header-logo" />
           <div className="scores-brand">
             <span className="scores-brand-title">March Matness</span>
