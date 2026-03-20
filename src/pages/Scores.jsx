@@ -331,8 +331,26 @@ function Leaderboard({ ownerScores, ownerId, onSelectOwner, wrestlers, picks, ow
 }
 
 function ByWeight({ picks, wrestlers, owners }) {
+  const [activeWc, setActiveWc] = useState(WEIGHT_CLASSES[0])
+
+  const scrollTo = (wc) => {
+    setActiveWc(wc)
+    const el = document.getElementById(`weight-section-${wc}`)
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' })
+  }
+
   return (
     <div className="by-weight">
+      <div className="weight-tabs">
+        {WEIGHT_CLASSES.map(wc => (
+          <button
+            key={wc}
+            className={`weight-tab ${activeWc === wc ? 'active' : ''}`}
+            onClick={() => scrollTo(wc)}
+          >{wc}</button>
+        ))}
+      </div>
+
       {WEIGHT_CLASSES.map(wc => {
         const weightPicks = picks.filter(p => p.weight_class === wc)
         if (weightPicks.length === 0) return null
@@ -346,7 +364,7 @@ function ByWeight({ picks, wrestlers, owners }) {
           .sort((a, b) => b.points - a.points)
 
         return (
-          <div key={wc} className="weight-section card">
+          <div key={wc} id={`weight-section-${wc}`} className="weight-section card">
             <h3>{wc} lbs</h3>
             <div className="weight-picks">
               {rows.map(({ pick, wrestler, owner, points }) => (
