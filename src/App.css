@@ -696,12 +696,29 @@ input:focus { border-color: var(--accent); }
 
 .bs-no-cons   { padding: 8px 0 16px; }
 
-/* Consolation table */
-.cons-wrap { overflow-x: auto; padding-bottom: 20px; }
-.cons-tbl  { width: 100%; border-collapse: collapse; font-size: 12px; min-width: 700px; }
-.cons-tbl th { padding: 6px 8px; text-align: left; font-size: 10px; font-weight: 700; text-transform: uppercase; color: var(--text-muted); border-bottom: 1px solid var(--border); white-space: nowrap; }
-.cons-tbl td { padding: 7px 8px; border-bottom: 1px solid var(--border); vertical-align: middle; }
-.cons-tbl tr:hover td { background: var(--bg2); }
+/* Consolation bracket */
+.cs-scroll  { overflow-x: auto; -webkit-overflow-scrolling: touch; padding-bottom: 12px; }
+.cs-bracket { display: flex; gap: 10px; min-width: max-content; padding: 4px 2px 8px; }
+.cs-col     { display: flex; flex-direction: column; width: 158px; }
+.cs-col-hdr { text-align: center; font-size: 10px; font-weight: 700; text-transform: uppercase;
+              letter-spacing: 0.07em; color: var(--text-muted); padding: 0 0 8px; }
+.cs-col-body { display: flex; flex-direction: column; gap: 6px; }
+
+.cs-match   { padding: 0; overflow: hidden; }
+.cs-divider { height: 1px; background: var(--border); }
+.cs-slot    { display: flex; align-items: center; gap: 5px; padding: 5px 8px; min-height: 26px; }
+.cs-tbd     { opacity: 0.35; }
+.cs-win     { background: transparent; }
+.cs-loss    { opacity: 0.45; }
+.cs-seed    { font-size: 10px; color: var(--text-muted); font-weight: 700; min-width: 18px; }
+.cs-name    { flex: 1; font-size: 12px; font-weight: 600; white-space: nowrap;
+              overflow: hidden; text-overflow: ellipsis; }
+.cs-own     { background: var(--accent); color: #fff; font-size: 9px; font-weight: 800;
+              width: 15px; height: 15px; border-radius: 50%;
+              display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.cs-pts     { font-size: 10px; color: var(--gold); font-weight: 700; white-space: nowrap; }
+.cs-res-l   { font-size: 10px; color: var(--text-muted); }
+.cs-empty   { font-size: 12px; }
 
 /* Scrollbar */
 ::-webkit-scrollbar { width: 6px; height: 6px; }

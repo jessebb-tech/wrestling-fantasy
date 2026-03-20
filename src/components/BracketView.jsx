@@ -202,62 +202,110 @@ function MobileBracket({ rounds, ownerMap }) {
   )
 }
 
-// ── Consolation table ─────────────────────────────────────
-const CONS_KEYS = CONS_ROUNDS.map(c => c.key)
+// ── Consolation bracket helpers ────────────────────────────
 
-function ConsolationTable({ wrestlers, ownerMap }) {
-  const rows = wrestlers
-    .filter(w => (w.round_results || []).some(r => CONS_KEYS.includes(r.round)))
-    .sort((a, b) => (b.total_points || 0) - (a.total_points || 0))
+function buildConsMatches(wrestlers, roundKey) {
+  const withRound = wrestlers.filter(w =>
+    (w.round_results || []).some(r => r.round === roundKey)
+  )
+  const paired = new Set()
+  const matches = []
 
-  if (rows.length === 0) {
+  // Process from winner's perspective to build pairs
+  for (const w of withRound) {
+    if (paired.has(w.id)) continue
+    const res = (w.round_results || []).find(r => r.round === roundKey)
+    if (!res || res.is_loss) continue
+
+    const oppName = (res.opponent || '').toLowerCase().trim()
+    const loser = withRound.find(x =>
+      !paired.has(x.id) && x.name.toLowerCase().trim() === oppName
+    )
+
+    paired.add(w.id)
+    if (loser) paired.add(loser.id)
+    matches.push({ winner: w, loser: loser || null, rk: roundKey, res })
+  }
+
+  // Catch any unmatched wrestlers (opponent not in DB)
+  for (const w of withRound) {
+    if (paired.has(w.id)) continue
+    const res = (w.round_results || []).find(r => r.round === roundKey)
+    if (!res) continue
+    paired.add(w.id)
+    if (res.is_loss) {
+      matches.push({ winner: null, loser: w, rk: roundKey, res })
+    } else {
+      matches.push({ winner: w, loser: null, rk: roundKey, res })
+    }
+  }
+
+  return matches
+}
+
+// ── Consolation slot ────────────────────────────────────────
+function ConsSlot({ wrestler, isWinner, rk, ownerMap }) {
+  if (!wrestler) {
+    return (
+      <div className="cs-slot cs-tbd">
+        <span className="cs-empty muted">—</span>
+      </div>
+    )
+  }
+
+  const res   = getRound(wrestler, rk)
+  const owner = ownerMap[wrestler.id]
+  const pts   = res && !res.is_loss
+    ? (res.points % 1 ? res.points.toFixed(1) : String(res.points))
+    : null
+
+  return (
+    <div className={`cs-slot${isWinner ? ' cs-win' : ' cs-loss'}`}>
+      <span className="cs-seed">{wrestler.seed}</span>
+      <span className="cs-name">{wrestler.name.split(' ').slice(-1)[0]}</span>
+      {owner && <span className="cs-own" title={owner}>{owner[0].toUpperCase()}</span>}
+      {isWinner && pts && <span className="cs-pts">+{pts}</span>}
+      {!isWinner && <span className="cs-res-l">L</span>}
+    </div>
+  )
+}
+
+// ── Consolation match card ───────────────────────────────────
+function ConsMatchCard({ match, ownerMap }) {
+  const { winner, loser, rk } = match
+  return (
+    <div className="cs-match card">
+      <ConsSlot wrestler={winner} isWinner={true}  rk={rk} ownerMap={ownerMap} />
+      <div className="cs-divider" />
+      <ConsSlot wrestler={loser}  isWinner={false} rk={rk} ownerMap={ownerMap} />
+    </div>
+  )
+}
+
+// ── Consolation bracket (column layout) ─────────────────────
+function ConsolationBracket({ wrestlers, ownerMap }) {
+  const cols = CONS_ROUNDS
+    .map(cr => ({ ...cr, matches: buildConsMatches(wrestlers, cr.key) }))
+    .filter(col => col.matches.length > 0)
+
+  if (cols.length === 0) {
     return <p className="muted bs-no-cons">No consolation results yet.</p>
   }
 
   return (
-    <div className="cons-wrap">
-      <table className="cons-tbl">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Wrestler</th>
-            <th>Owner</th>
-            {CONS_ROUNDS.map(r => <th key={r.key}>{r.label}</th>)}
-            <th>Pts</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody>
-          {rows.map(w => (
-            <tr key={w.id} className={w.is_eliminated ? 'br-row-elim' : ''}>
-              <td className="bt-seed">#{w.seed}</td>
-              <td className="bt-name">
-                <div>{w.name}</div>
-                <div className="muted" style={{ fontSize: '0.72em' }}>{w.school}</div>
-              </td>
-              <td className="bt-owner">{ownerMap[w.id] || <span className="muted">—</span>}</td>
-              {CONS_ROUNDS.map(cr => {
-                const res = getRound(w, cr.key)
-                return (
-                  <td key={cr.key} className="bt-round-cell">
-                    {res
-                      ? res.is_loss
-                        ? <span className="br-loss">L</span>
-                        : <span className="br-win">W<span className="br-pts">+{res.points}</span></span>
-                      : <span className="br-empty">–</span>}
-                  </td>
-                )
-              })}
-              <td className="bt-pts">{(w.total_points || 0).toFixed(1)}</td>
-              <td className="bt-status">
-                {w.is_eliminated
-                  ? <span className="elim-tag">OUT</span>
-                  : <span className="active-tag">Active</span>}
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
+    <div className="cs-scroll">
+      <div className="cs-bracket">
+        {cols.map(col => (
+          <div key={col.key} className="cs-col">
+            <div className="cs-col-hdr">{col.label}</div>
+            <div className="cs-col-body">
+              {col.matches.map((m, i) => (
+                <ConsMatchCard key={i} match={m} ownerMap={ownerMap} />
+              ))}
+            </div>
+          </div>
+        ))}
+      </div>
     </div>
   )
 }
@@ -438,7 +486,7 @@ export default function BracketView({ wrestlers, picks, owners, isCommissioner }
 
       {/* ── Consolation bracket ── */}
       <div className="bs-section-hdr" style={{ marginTop: 28 }}>Consolation Bracket</div>
-      <ConsolationTable wrestlers={ww} ownerMap={ownerMap} />
+      <ConsolationBracket wrestlers={ww} ownerMap={ownerMap} />
 
     </div>
   )
