@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { WEIGHT_CLASSES } from '../lib/scoring'
-import { getRound, getMatchWinner, buildRounds } from '../lib/bracket'
+import { getRound, getMatchWinner, buildRounds, buildConsRounds } from '../lib/bracket'
 
 // ── Round definitions ──────────────────────────────────────
 const CHAMP_ROUNDS = [
@@ -44,6 +44,19 @@ function mCY(ri, mi) {
   return mi * UNIT * span + HC + UNIT * (span - 1) / 2
 }
 function mTY(ri, mi) { return mCY(ri, mi) - HC }
+
+// ── Consolation layout constants ───────────────────────────
+const CONS_C    = 8                   // base match count (C1/C2 both have 8)
+const CONS_BH   = CONS_C * UNIT
+const CONS_TH   = HDR + CONS_BH + 10
+const CONS_W    = 5 * CW + 4 * XW + 2
+const CONS_VISR = [0, 0, 1, 2, 2]    // visual round index per column
+
+function cCY(ri, mi) {
+  const span = 1 << ri
+  return mi * UNIT * span + HC + UNIT * (span - 1) / 2
+}
+function cTY(ri, mi) { return cCY(ri, mi) - HC }
 
 // ── Slot (one wrestler in a match) ────────────────────────
 function Slot({ wrestler, isBye, rk, ownerMap }) {
@@ -202,109 +215,98 @@ function MobileBracket({ rounds, ownerMap }) {
   )
 }
 
-// ── Consolation bracket helpers ────────────────────────────
+// ── Consolation connectors ─────────────────────────────────
 
-function buildConsMatches(wrestlers, roundKey) {
-  const withRound = wrestlers.filter(w =>
-    (w.round_results || []).some(r => r.round === roundKey)
-  )
-  const paired = new Set()
-  const matches = []
-
-  // Process from winner's perspective to build pairs
-  for (const w of withRound) {
-    if (paired.has(w.id)) continue
-    const res = (w.round_results || []).find(r => r.round === roundKey)
-    if (!res || res.is_loss) continue
-
-    const oppName = (res.opponent || '').toLowerCase().trim()
-    const loser = withRound.find(x =>
-      !paired.has(x.id) && x.name.toLowerCase().trim() === oppName
-    )
-
-    paired.add(w.id)
-    if (loser) paired.add(loser.id)
-    matches.push({ winner: w, loser: loser || null, rk: roundKey, res })
+// Straight 1-to-1 connectors (C1→C2 and C4→C5)
+function StraightConnectors({ count, visr, colLeft }) {
+  const paths = []
+  for (let m = 0; m < count; m++) {
+    const y = HDR + cCY(visr, m)
+    paths.push(`M0,${y}H${XW}`)
   }
-
-  // Catch any unmatched wrestlers (opponent not in DB)
-  for (const w of withRound) {
-    if (paired.has(w.id)) continue
-    const res = (w.round_results || []).find(r => r.round === roundKey)
-    if (!res) continue
-    paired.add(w.id)
-    if (res.is_loss) {
-      matches.push({ winner: null, loser: w, rk: roundKey, res })
-    } else {
-      matches.push({ winner: w, loser: null, rk: roundKey, res })
-    }
-  }
-
-  return matches
-}
-
-// ── Consolation slot ────────────────────────────────────────
-function ConsSlot({ wrestler, isWinner, rk, ownerMap }) {
-  if (!wrestler) {
-    return (
-      <div className="cs-slot cs-tbd">
-        <span className="cs-empty muted">—</span>
-      </div>
-    )
-  }
-
-  const res   = getRound(wrestler, rk)
-  const owner = ownerMap[wrestler.id]
-  const pts   = res && !res.is_loss
-    ? (res.points % 1 ? res.points.toFixed(1) : String(res.points))
-    : null
-
   return (
-    <div className={`cs-slot${isWinner ? ' cs-win' : ' cs-loss'}`}>
-      <span className="cs-seed">{wrestler.seed}</span>
-      <span className="cs-name">{wrestler.name.split(' ').slice(-1)[0]}</span>
-      {owner && <span className="cs-own" title={owner}>{owner[0].toUpperCase()}</span>}
-      {isWinner && pts && <span className="cs-pts">+{pts}</span>}
-      {!isWinner && <span className="cs-res-l">L</span>}
-    </div>
+    <svg width={XW} height={CONS_TH}
+      style={{ position: 'absolute', left: colLeft, top: 0, pointerEvents: 'none' }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {paths.map((d, i) => (
+        <path key={i} d={d} stroke="var(--border)" strokeWidth="1.5" fill="none" />
+      ))}
+    </svg>
   )
 }
 
-// ── Consolation match card ───────────────────────────────────
-function ConsMatchCard({ match, ownerMap }) {
-  const { winner, loser, rk } = match
+// Branching connectors — pairs of left-column matches merge into one right-column match
+function BranchConsConnectors({ leftVisr, colLeft }) {
+  const leftCount = CONS_C >> leftVisr   // 8 → 4 → 2
+  const toCount   = leftCount / 2
+  const mid       = XW / 2
+  const paths     = []
+  for (let m = 0; m < toCount; m++) {
+    const y0 = HDR + cCY(leftVisr,     2 * m)
+    const y1 = HDR + cCY(leftVisr,     2 * m + 1)
+    const yM = HDR + cCY(leftVisr + 1, m)
+    paths.push(`M0,${y0}H${mid}V${y1}M0,${y1}H${mid}M${mid},${yM}H${XW}`)
+  }
   return (
-    <div className="cs-match card">
-      <ConsSlot wrestler={winner} isWinner={true}  rk={rk} ownerMap={ownerMap} />
-      <div className="cs-divider" />
-      <ConsSlot wrestler={loser}  isWinner={false} rk={rk} ownerMap={ownerMap} />
-    </div>
+    <svg width={XW} height={CONS_TH}
+      style={{ position: 'absolute', left: colLeft, top: 0, pointerEvents: 'none' }}
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      {paths.map((d, i) => (
+        <path key={i} d={d} stroke="var(--border)" strokeWidth="1.5" fill="none" />
+      ))}
+    </svg>
   )
 }
 
-// ── Consolation bracket (column layout) ─────────────────────
+// ── Consolation bracket (SVG visual) ─────────────────────
+const CONS_ROUND_LABELS = ['C1', 'C2', 'C3', 'C4', 'AA']
+
 function ConsolationBracket({ wrestlers, ownerMap }) {
-  const cols = CONS_ROUNDS
-    .map(cr => ({ ...cr, matches: buildConsMatches(wrestlers, cr.key) }))
-    .filter(col => col.matches.length > 0)
-
-  if (cols.length === 0) {
-    return <p className="muted bs-no-cons">No consolation results yet.</p>
-  }
+  const consRounds = buildConsRounds(wrestlers)
 
   return (
-    <div className="cs-scroll">
-      <div className="cs-bracket">
-        {cols.map(col => (
-          <div key={col.key} className="cs-col">
-            <div className="cs-col-hdr">{col.label}</div>
-            <div className="cs-col-body">
-              {col.matches.map((m, i) => (
-                <ConsMatchCard key={i} match={m} ownerMap={ownerMap} />
-              ))}
-            </div>
-          </div>
+    <div className="bs-scroll">
+      <div style={{ position: 'relative', width: CONS_W, height: CONS_TH }}>
+
+        {/* Column headers */}
+        {CONS_ROUND_LABELS.map((label, ci) => (
+          <div key={ci} className="bs-col-hdr"
+            style={{ position: 'absolute', left: ci * (CW + XW), top: 0, width: CW }}
+          >{label}</div>
         ))}
+
+        {/* Match boxes */}
+        {consRounds.map((matches, ci) => {
+          const visr = CONS_VISR[Math.min(ci, 4)]
+          return matches.map((match, mi) => (
+            <div key={`${ci}-${mi}`} className="bs-match" style={{
+              position: 'absolute',
+              top:  HDR + cTY(visr, mi),
+              left: ci * (CW + XW),
+              width: CW,
+              height: MH,
+            }}>
+              <Slot wrestler={match.top}    isBye={false} rk={match.rk} ownerMap={ownerMap} />
+              <div className="bs-divider" />
+              <Slot wrestler={match.bottom} isBye={false} rk={match.rk} ownerMap={ownerMap} />
+            </div>
+          ))
+        })}
+
+        {/* C1 → C2: straight connectors */}
+        <StraightConnectors count={8} visr={0} colLeft={0 * (CW + XW) + CW} />
+
+        {/* C2 → C3: branching connectors */}
+        <BranchConsConnectors leftVisr={0} colLeft={1 * (CW + XW) + CW} />
+
+        {/* C3 → C4: branching connectors */}
+        <BranchConsConnectors leftVisr={1} colLeft={2 * (CW + XW) + CW} />
+
+        {/* C4 → C5: straight connectors */}
+        <StraightConnectors count={2} visr={2} colLeft={3 * (CW + XW) + CW} />
+
       </div>
     </div>
   )

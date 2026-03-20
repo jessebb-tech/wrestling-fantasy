@@ -32,6 +32,84 @@ export function getMatchWinner(match) {
   return null
 }
 
+// Returns the loser of a match. Returns null for byes or undecided matches.
+export function getMatchLoser(match) {
+  const { topBye, bottomBye } = match
+  if (topBye || bottomBye) return null
+  const winner = getMatchWinner(match)
+  if (winner === null) return null
+  return winner === match.top ? match.bottom : match.top
+}
+
+// Internal: winner of a consolation match (no byes, null = TBD).
+function getConsMatchWinner({ top, bottom, rk }) {
+  if (!top || !bottom) return null
+  const r1 = getRound(top, rk)
+  const r2 = getRound(bottom, rk)
+  if (r1 && !r1.is_loss) return top
+  if (r2 && !r2.is_loss) return bottom
+  if (r1?.is_loss)        return bottom
+  if (r2?.is_loss)        return top
+  return null
+}
+
+// Builds all 5 consolation rounds with full TBD propagation.
+// Returns [c1, c2, c3, c4, c5] — each is an array of match objects.
+export function buildConsRounds(wrestlers) {
+  const champRounds = buildRounds(wrestlers)
+  const r64 = champRounds[0]   // 16 R64 matches
+  const r32 = champRounds[1]   // 8 R32 matches
+  const sf  = champRounds[3]   // 2 SF matches
+
+  // C1: losers of adjacent R64 pairs → 8 matches
+  const c1 = []
+  for (let m = 0; m < 8; m++) {
+    c1.push({
+      top:    getMatchLoser(r64[2 * m]),
+      bottom: getMatchLoser(r64[2 * m + 1]),
+      rk: 'C1',
+    })
+  }
+
+  // C2: top-half C1 winners [0-3] × bottom-half R32 losers [4-7]
+  //     bottom-half C1 winners [4-7] × top-half R32 losers [0-3]
+  const c2 = []
+  for (let m = 0; m < 4; m++) {
+    c2.push({ top: getConsMatchWinner(c1[m]),     bottom: getMatchLoser(r32[4 + m]), rk: 'C2' })
+  }
+  for (let m = 0; m < 4; m++) {
+    c2.push({ top: getConsMatchWinner(c1[4 + m]), bottom: getMatchLoser(r32[m]),     rk: 'C2' })
+  }
+
+  // C3: C2 winners, adjacent pairs → 4 matches
+  const c3 = []
+  for (let m = 0; m < 4; m++) {
+    c3.push({
+      top:    getConsMatchWinner(c2[2 * m]),
+      bottom: getConsMatchWinner(c2[2 * m + 1]),
+      rk: 'C3',
+    })
+  }
+
+  // C4: C3 winners, adjacent pairs → 2 matches
+  const c4 = []
+  for (let m = 0; m < 2; m++) {
+    c4.push({
+      top:    getConsMatchWinner(c3[2 * m]),
+      bottom: getConsMatchWinner(c3[2 * m + 1]),
+      rk: 'C4',
+    })
+  }
+
+  // C5: C4 winners × SF losers → 2 matches (straight connectors from C4)
+  const c5 = [
+    { top: getConsMatchWinner(c4[0]), bottom: getMatchLoser(sf[0]), rk: 'C5' },
+    { top: getConsMatchWinner(c4[1]), bottom: getMatchLoser(sf[1]), rk: 'C5' },
+  ]
+
+  return [c1, c2, c3, c4, c5]
+}
+
 export function buildRounds(wrestlers) {
   const bySeed = {}
   wrestlers.forEach(w => { if (w.seed) bySeed[w.seed] = w })
